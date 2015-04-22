@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>Herramienta Migracion ERP | SIO SA </title>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/xml2json.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/migracion.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<style type="text/css">
+		div{
+			box-sizing: border-box;
+		}
+		#divhtml input{
+			/*font-size: 0.57em;*/
+		}
+		#container, #divhtml{
+			text-align: center;
+		}
+		#divControles{
+			text-align: center;
+			display: inline-block;
+			margin: 0 auto;
+		}
+		#respjson{
+			width: 500px;
+			display: none;
+		}
+		.window{
+			margin: 0 auto;
+			background-color:Gray;
+		}
+		.canvas{
+			background-color:Gray;
+		}
+		.graphics {
+			font-weight: bold;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="divControles">
+			<label for="forma">Forma</label>
+			<input id="forma" placeholder="Digita el nombre de la forma" value="ACT2004"/>
+			<input id="zoom" type="slider"/>
+			<button onclick="$('#forma').val('');$('#respjson').val('');">Limpiar</button>
+			<a id="desHtml">HTML</a>
+			<a id="desCSS">CSS</a>
+			<hr/>
+			<button id="ghtml">Generar HTML</button>
+			<button id="gjs">Generar JS</button>
+			<button id="gpkg">Generar Procedimientos</button>
+		</div>
+		<div>
+			<textarea id="respjson" rows="10"></textarea>
+		</div>
+	</div>
+	<div id="divhtml"></div>
+</body>
+</html>
