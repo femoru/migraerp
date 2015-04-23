@@ -173,7 +173,6 @@ function pintarBloque(block){
 	}else{
 		for (var i = 0; i < block.Item.length; i++) {
 			pintarItems(block.Item[i],block);
-
 		};
 	}
 }
@@ -184,32 +183,15 @@ function pintarItems(item,block){
 		var divCont =$('<div/>',{
 			id:"d"+block.Name+"_"+item.Name
 		});
-		
-
 
 		try{
 			var label = $("<label/>",{
 				id:"l"+block.Name+"_"+item.Name,
 				'for':block.Name+"_"+item.Name,
-				text:item.Prompt
+				text:item.Prompt.replace('&#10;','\n')
 			}).appendTo(divCont);
 
 			var lTop,lLeft;
-
-		/*	if(item.PromptAttachmentEdge === "Arriba"){
-				lTop = (zoom * item.YPosition - 20) + "px;";
-				lLeft = zoom * item.XPosition + "px;";
-			}else{
-				lTop = (zoom * item.YPosition) + "px;";
-				lLeft = (zoom * item.XPosition - (item.Prompt.length) * 8) + "px;"; 
-			}
-			if(!isNaN(item.YPosition) && !isNaN(item.XPosition) && !isNaN(item.Prompt.length)){
-				estilo +="#l"+block.Name+"_"+item.Name+"{"+
-					"position:absolute;" +
-					"Top:" + lTop   + 
-					"Left:" + lLeft +
-					"}";
-			}*/
 
 		}catch(e){
 			logger(item.Name + " error en label")
@@ -218,8 +200,8 @@ function pintarItems(item,block){
 
 		var input = $('<input/>',{
 			id:block.Name+"_"+item.Name,
-			placeholder:item.Prompt,
-			title:item.Prompt
+			placeholder:item.Prompt.replace('&#10;',' '),
+			title:item.Prompt.replace('&#10;',' ')
 		}).appendTo(divCont);
 
 		if(!isNaN(item.Width) && !isNaN(item.Height) && !isNaN(item.YPosition) && !isNaN(item.XPosition)){
