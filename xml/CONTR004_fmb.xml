@@ -1,0 +1,215 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="CONTR004" ConsoleWindow="WINDOW0" RecordVisualAttributeGroupName="" DirtyInfo="true" RuntimeComp="4.5" MenuModule="Mppal" ValidationUnit="Por Defecto" MouseNavigationLimit="Pantalla" CursorMode="Abrir" MenuRole="" Title="Tipos control del Proceso de Contratación" InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="6" CoordinateSystem="Real" CharacterCellHeight="17" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="TIPO_CONTROL" ScrollbarTabPageName="" DirtyInfo="true" WhereClause="c_emp = :global.empresa" ScrollbarWidth="9" ScrollbarXPosition="536" BackColor="r75g88b100" QueryDataSourceName="tipo_control" ScrollbarYPosition="96" ShowScrollbar="true" ScrollbarCanvasName="PRINCIPAL" RecordsDisplayCount="10" ScrollbarLength="140">
+         <Item Name="TIPO_CONT" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="42" ColumnName="TIPO_CONT" Hint="Indique el código de tipo de control que desea manejar" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Tipo Control" DirtyInfo="true" XPosition="34" PromptFontSize="800" PromptFontSpacing="Normal" Required="true" YPosition="96" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="2" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="TIPO_PROC" DirtyInfo="true" Height="14" Justification="Principio" ListElementCount="4" XPosition="78" OtherValues="S" DatabaseItem="true" Width="54" ColumnName="TIPO_PROC" YPosition="96" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" ItemType="Árbol Jerárquico" CaseRestriction="Superior" CanvasName="PRINCIPAL"/>
+         <Item Name="DESCRIPCION" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="213" ColumnName="DESCRIPCION" Hint="Indique la descripción del control a aplicar" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="50" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Descripción" DirtyInfo="true" XPosition="133" PromptFontSize="800" PromptFontSpacing="Normal" Required="true" YPosition="96" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="2" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="COD_TRAMITE" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="50" ColumnName="COD_TRAMITE" Hint="Indique el código del grupo de trámites a cumplir en éste control" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Trámites" DirtyInfo="true" XPosition="347" PromptFontSize="800" PromptFontSpacing="Normal" LovName="LISTRAMITE" Required="true" ValidateFromList="true" YPosition="96" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="1" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="POST-TEXT-ITEM" TriggerText="If :system.record_status in ('NEW','INSERT') Then&amp;#10;	:tipo_control.con_sin_f := 'C';&amp;#10;End If;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="COD_DOCUMENTO" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="50" ColumnName="COD_DOCUMENTO" Hint="Indique el grupo de documentos a cumplir en éste tipo de control.  Utilice lista de valores si no los conoce." PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Documentos" DirtyInfo="true" XPosition="397" PromptFontSize="800" PromptFontSpacing="Normal" LovName="LISDCTOS" Required="false" ValidateFromList="true" YPosition="96" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="1" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="CON_SIN_F" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" ForegroundColor="black" Width="9" ColumnName="CON_SIN_F" FontSpacing="Normal" Hint="Documento o trámite  (Con / Sin) Formalidades Plenas" PromptDisplayStyle="Primer Registro" CheckedValue="S" ItemsDisplay="0" MaximumLength="1" FontWeight="Negrita" ItemType="Elemento de Gráfico" PromptForegroundColor="r25g0b75" Prompt="C/S" FontSize="800" DirtyInfo="true" XPosition="455" FontName="Century Gothic" PromptFontSpacing="Normal" PromptFontSize="800" PromptAlignOffset="-1" YPosition="96" Tooltip="Documento o trámite  (Con / Sin) Formalidades Plenas" BackColor="r75g88b100" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="0" UncheckedValue="C" FontStyle="Normal" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="TCONTRATACION" Height="14" PromptFontName="Arial" OtherValues="D" Width="67" ColumnName="TCONTRATACION" MaximumLength="1" ItemType="Árbol Jerárquico" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Tipo Contratación" ListElementCount="3" DirtyInfo="true" XPosition="469" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-12" VisualAttributeName="NORMAL" YPosition="96" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-71" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="C_EMP" DirtyInfo="true" Height="14" MaximumLength="2" Width="14" ItemType="Casilla de Control" Required="true" Prompt="C Emp" ColumnName="C_EMP"/>
+         <Item Name="USR" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" Prompt="" ColumnName=""/>
+         <Item Name="FEC_PROC" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" DataType="Datetime" Prompt="" ColumnName="" FormatMask="DD-MM-YYYY HH24:MI:SS"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_EMP" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="TIPO_CONT" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="TIPO_PROC" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="50" DSCPrecision="0" DSCName="DESCRIPCION" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_TRAMITE" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_DOCUMENTO" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="CON_SIN_F" DSCScale="0" DSCMandatory="false"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="TCONTRATACION" DSCScale="0" DSCMandatory="false"/>
+         <Trigger Name="PRE-INSERT" TriggerText=":tipo_control.c_emp := :global.empresa;&amp;#10;:tipo_control.usr  := :global.usuario_sp6;&amp;#10;:tipo_control.FEC_PROC  := SYSDATE;&amp;#10;&amp;#10;" DirtyInfo="true"/>
+         <Trigger Name="PRE-UPDATE" TriggerText=":tipo_control.usr  := :global.usuario_sp6;&amp;#10;:tipo_control.FEC_PROC  := SYSDATE;&amp;#10;" DirtyInfo="true"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="PRINCIPAL" ViewportHeight="198" ViewportXPosition="10" WindowName="WINDOW0" Height="500" DirtyInfo="true" Bevel="Hundido" ViewportYPosition="55" Width="800" ViewportWidth="439" CanvasType="Contenido" VisualAttributeName="DEFAULT" BackColor="gray20" ShowHorizontalScrollbar="false" ShowVerticalScrollbar="false">
+         <Graphics Name="GRAPHIC327" GraphicsText="DEFINICION DE TIPOS DE CONTROL PARA LA CONTRATACION" Height="10" VerticalOrigin="Centro" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="white" ForegroundColor="darkcyan" Width="229" HorizontalJustification="Principio" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="1" HorizontalObjectOffset="13" DirtyInfo="true" Bevel="Ninguno" XPosition="53" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="23" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial">
+            <CompoundText Name="CMPTXT325">
+               <TextSegment Name="TEXTSTR326" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="DEFINICION DE TIPOS DE CONTROL PARA LA CONTRATACION" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="RECT1" GraphicsText="" Height="203" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="black" Width="526" InternalRotationAngle="0" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="5" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="9" EdgeBackColor="black" CapStyle="Plana" DirtyInfo="true" XPosition="25" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" DashStyle="Sólido" EdgePattern="solid" YPosition="59" GraphicsType="Rectángulo" BackColor="r75g88b100" EdgeForegroundColor="yellow" GraphicsFontName="" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT314" GraphicsText="Proceso" Height="10" VerticalOrigin="Inferior" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r25g0b75" ForegroundColor="darkcyan" Width="30" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="5" FillPattern="none" GraphicsFontColorCode="21" HorizontalObjectOffset="9" WrapText="false" DirtyInfo="true" XPosition="106" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="9" HorizontalMargin="5" BoundingBoxScalable="false" EdgePattern="none" YPosition="92" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" HorizontalOrigin="Centro" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT315">
+               <TextSegment Name="TEXTSTR316" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Proceso" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT324" GraphicsText="DEFINICION DE TIPOS DE CONTROL PARA LA CONTRATACION" Height="10" VerticalOrigin="Centro" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="229" HorizontalJustification="Principio" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="13" DirtyInfo="true" Bevel="Ninguno" XPosition="53" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="25" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial">
+            <CompoundText Name="CMPTXT325">
+               <TextSegment Name="TEXTSTR326" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="DEFINICION DE TIPOS DE CONTROL PARA LA CONTRATACION" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+      </Canvas>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <LOV Name="LISTRAMITE" ParentType="29" RecordGroupName="LISTRAMITE" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR004" AutoPosition="true" Title="Requisitos" ParentModuleType="12">
+         <LOVColumnMapping Name="COD_GREQ" DirtyInfo="true" ReturnItem="TIPO_CONTROL.COD_TRAMITE" DisplayWidth="50" Title="Grupo Requisitos"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="" DisplayWidth="185" Title="Descripción"/>
+      </LOV>
+      <LOV Name="LISDCTOS" ParentType="29" RecordGroupName="LISTRAMITE" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR004" AutoPosition="true" Title="Requerimientos" ParentModuleType="12">
+         <LOVColumnMapping Name="COD_GREQ" DirtyInfo="true" ReturnItem="TIPO_CONTROL.COD_DOCUMENTO" DisplayWidth="50" Title="Requerimiento"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="" DisplayWidth="185" Title="Descripción"/>
+      </LOV>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE inicio IS&amp;#10;BEGIN&amp;#10;  Execute_Trigger('INIT');&amp;#10;  BUSCAR;&amp;#10;  :system.message_level := 0;  &amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN&amp;#10;  GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;  Create_record;&amp;#10;END;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 1;&amp;#10;  If (:System.form_status = 'CHANGED' or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form(no_validate);&amp;#10;    Inicio;&amp;#10;  End If;&amp;#10;END;"/>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;BEGIN&amp;#10;  GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;  Delete_record;&amp;#10;END;"/>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;Begin&amp;#10;  Commit;&amp;#10;End;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;   go_block('Tipo_control');&amp;#10;   If Form_Success Then&amp;#10;     clear_block(No_Validate);&amp;#10;     Execute_Query(All_Records);&amp;#10;   End If;&amp;#10;&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <RecordGroup Name="LISTRAMITE" DirtyInfo="true" RecordGroupQuery="select cod_greq,nom&amp;#10;from greq_enc&amp;#10;where c_emp = :global.empresa">
+         <RecordGroupColumn Name="COD_GREQ" DirtyInfo="true" MaximumLength="10" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="40" ColumnDataType="Character"/>
+      </RecordGroup>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="CURR_RECORD" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA1" FontSize="900" BackColor="gray36" DirtyInfo="true" FontName="Century Gothic" ForegroundColor="white" FontStyle="Normal"/>
+      <Window Name="WINDOW0" MinimizeAllowed="true" Height="500" DirtyInfo="true" Bevel="Resaltado" HideOnExit="false" Width="800" InheritMenu="true" Title="Tipos control del Proceso de Contratación" VisualAttributeName="DEFAULT" ClearAllowed="true" ShowHorizontalScrollbar="false" MaximizeAllowed="true" MinimizeTitle="Clases de Comprobantes" WindowStyle="Documento" ShowVerticalScrollbar="false" ResizeAllowed="true" MoveAllowed="true" IconFilename="Contab"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>

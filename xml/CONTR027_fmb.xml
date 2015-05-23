@@ -1,0 +1,261 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="CONTR027" ConsoleWindow="WINDOW0" DirtyInfo="true" MenuModule="MPPAL" Title="MODULO2" InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="7" CoordinateSystem="Real" CharacterCellHeight="14" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="CONTROL" DirtyInfo="true" ScrollbarWidth="14" ScrollbarLength="135">
+         <Item Name="C_AGR" RecordVisualAttributeGroupName="CURR_RECORD" DirtyInfo="true" Justification="Principio" Height="14" XPosition="70" LovName="AGENCIA" Width="36" ItemType="Área del Usuario" CanvasName="MULTAS" YPosition="80" VisualAttributeName="NORMAL"/>
+         <Item Name="N_IDE" RecordVisualAttributeGroupName="CURR_RECORD" DirtyInfo="true" Justification="Principio" Height="14" XPosition="107" LovName="N_IDE" Width="89" ItemType="Área del Usuario" CanvasName="MULTAS" YPosition="80" VisualAttributeName="NORMAL"/>
+         <Item Name="NOMBRE" Height="14" Justification="Principio" DirtyInfo="true" XPosition="197" LovName="N_IDE" Width="213" VisualAttributeName="NORMAL" YPosition="80" RecordVisualAttributeGroupName="CURR_RECORD" ItemType="Área del Usuario" CanvasName="MULTAS" Enabled="false"/>
+         <Item Name="N_CONT" RecordVisualAttributeGroupName="CURR_RECORD" DirtyInfo="true" Justification="Principio" Height="14" XPosition="411" LovName="CONTRATO" Width="72" ItemType="Área del Usuario" CanvasName="MULTAS" YPosition="80" VisualAttributeName="NORMAL">
+            <Trigger Name="KEY-NEXT-ITEM" TriggerText="go_item('mult_cont.fecha');" DirtyInfo="true"/>
+         </Item>
+      </Block>
+      <Block Name="MULT_CONT" DirtyInfo="true" QueryDataSourceName="MULT_CONT" ScrollbarWidth="14" ScrollbarLength="135" RecordsDisplayCount="5">
+         <Item Name="C_EMP" DirtyInfo="true" Height="14" MaximumLength="2" Width="20" ItemType="Área del Usuario" Required="true" Prompt="C Emp" ColumnName="C_EMP"/>
+         <Item Name="C_AGR" DirtyInfo="true" Height="14" MaximumLength="2" Width="20" ItemType="Área del Usuario" Required="true" Prompt="C Agr" ColumnName="C_AGR"/>
+         <Item Name="N_IDE" DirtyInfo="true" Height="14" XPosition="79" Width="88" Required="true" ColumnName="N_IDE" DistanceBetweenRecords="56" YPosition="94" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="12" PromptAttachmentOffset="7" ItemType="Área del Usuario" TabPageName="" CanvasName="" Prompt="N Ide"/>
+         <Item Name="N_CONT" DirtyInfo="true" Height="14" XPosition="79" Width="115" Required="true" ColumnName="N_CONT" DistanceBetweenRecords="56" YPosition="110" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="16" PromptAttachmentOffset="7" ItemType="Área del Usuario" TabPageName="" CanvasName="" Prompt="N Cont"/>
+         <Item Name="FECHA" Height="14" PromptFontName="Arial" InsertAllowed="false" Width="74" DistanceBetweenRecords="0" ColumnName="FECHA" Hint="FORMATO DD/MM/YYYY" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" FormatMask="DD/MM/YYYY" UpdateAllowed="false" DirtyInfo="true" XPosition="73" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-14" Required="true" DataType="Date" VisualAttributeName="NORMAL" YPosition="161" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-24" TabPageName="" CanvasName="MULTAS" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="DECLARE &amp;#10;	FECHA_VENC DATE;&amp;#10;BEGIN&amp;#10;	&amp;#10;   BEGIN	&amp;#10;	  SELECT F_VEN &amp;#10;	  INTO   FECHA_VENC&amp;#10;	  FROM   CONT_CXP&amp;#10;	  WHERE  C_EMP   = :GLOBAL.EMPRESA &amp;#10;	    AND  N_CONT  = :CONTROL.N_CONT;	    &amp;#10;   EXCEPTION   	&amp;#10;	   WHEN NO_DATA_FOUND THEN &amp;#10;	   MESSAGEBOX('LA FECHA DE VENCIMIENTO DEL CONTRATO NO EXISTE');&amp;#10;	   WHEN TOO_MANY_ROWS THEN&amp;#10;	   MESSAGEBOX('LA FECHA DE VENCIMIENTO DEL CONTRATO ESTA DUPLICADA. VERIFIQUE');&amp;#10;     RAISE FORM_TRIGGER_FAILURE;&amp;#10;     WHEN OTHERS THEN &amp;#10;     RAISE FORM_TRIGGER_FAILURE;&amp;#10;   END;&amp;#10;   &amp;#10;     IF :MULT_CONT.FECHA > FECHA_VENC THEN &amp;#10;     	MESSAGEBOX('FECHA DE APLICACION DE LA MULTA NO PUEDE SER MAYOR QUE LA FECHA DE VENCIMIENTO DEL CONTRATO');&amp;#10;     	RAISE FORM_TRIGGER_FAILURE;&amp;#10;     END IF;&amp;#10;     &amp;#10;END;&amp;#10;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="VALOR" Height="14" PromptFontName="Tahoma" Width="115" DistanceBetweenRecords="0" ColumnName="VALOR" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="16" ItemType="Área del Usuario" FormatMask="999G999G999G999D99" DirtyInfo="true" Justification="Derecha" XPosition="147" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-14" Required="true" DataType="Number" VisualAttributeName="NORMAL" YPosition="161" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-20" TabPageName="" CanvasName="MULTAS" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="DECLARE&amp;#10;	VALORCONT   NUMBER(14,2);&amp;#10;	VALORSUSP   NUMBER(14,2);&amp;#10;	TOTALSUSP   NUMBER(14,2);&amp;#10;	PORC        NUMBER(5,2);&amp;#10;	MULT        NUMBER;&amp;#10;  VALOR       NUMBER(14,2);&amp;#10;  RESP        NUMBER(2);  &amp;#10;BEGIN&amp;#10;    &amp;#10;   --BUSCO EL VALOR O MONTO DEL CONTRATO   &amp;#10;     BEGIN &amp;#10;	    SELECT  MONTO &amp;#10;	    INTO    VALORCONT&amp;#10;	    FROM    CONT_CXP &amp;#10;	    WHERE   C_EMP  = :GLOBAL.EMPRESA &amp;#10;	    AND     N_IDE  = :CONTROL.N_IDE&amp;#10;	    AND     N_CONT = :CONTROL.N_CONT;&amp;#10;     EXCEPTION&amp;#10;     	WHEN NO_DATA_FOUND THEN &amp;#10;     	VALORCONT := 0;&amp;#10;     END;&amp;#10;   &amp;#10;  --BUSCO EL PORCENTAJE DE SUSPENSION &amp;#10;    BEGIN &amp;#10;	    SELECT  PORC_SUSP &amp;#10;	    INTO    PORC&amp;#10;	    FROM    PARAM_CONTR &amp;#10;	    WHERE   C_EMP  = :GLOBAL.EMPRESA;&amp;#10;	   EXCEPTION&amp;#10;     	WHEN NO_DATA_FOUND THEN &amp;#10;     	PORC := 1;&amp;#10;     END;&amp;#10;     TOTALSUSP := VALORCONT * PORC /100;&amp;#10;     &amp;#10;  -- CUENTO CUANTAS MULTAS  TIENE EL CONTRATO   &amp;#10;    BEGIN &amp;#10;    	SELECT  COUNT(*)&amp;#10;      INTO    MULT&amp;#10;      FROM    MULT_CONT&amp;#10;      WHERE   C_EMP  =  :GLOBAL.EMPRESA&amp;#10;      AND     N_IDE  =  :CONTROL.N_IDE &amp;#10;      AND     N_CONT =  :CONTROL.N_CONT;&amp;#10;    EXCEPTION&amp;#10;    	WHEN NO_DATA_FOUND THEN &amp;#10;    	MULT := 0;&amp;#10;    END;        &amp;#10;    --- BUSCO LA SUMATORIA DE CUANTAS MULTAS HA TENIDO UN CONTRATO &amp;#10;    -- PARA COMPARAR CON EL TOTAL Y VERIFICAR QUE NO SOBREPASE EL PORCENTAJE &amp;#10;    -- DE SUSPENSION &amp;#10;   IF MULT > 0 THEN   &amp;#10;    BEGIN &amp;#10;    	SELECT  SUM (NVL(VALOR,0))&amp;#10;      INTO    VALORSUSP&amp;#10;      FROM    MULT_CONT&amp;#10;      WHERE   C_EMP  =  :GLOBAL.EMPRESA&amp;#10;      AND     N_IDE  =  :CONTROL.N_IDE &amp;#10;      AND     N_CONT =  :CONTROL.N_CONT;&amp;#10;    EXCEPTION&amp;#10;    	WHEN NO_DATA_FOUND THEN &amp;#10;    	VALORSUSP := 0;&amp;#10;    END;&amp;#10;    -- COMPARO EL TOTAL DE SUSPENSIONES  &amp;#10;     IF  NVL(TOTALSUSP,0) &lt; VALORSUSP THEN &amp;#10;     	Resp := Preguntar ('el contrato se va suspender . Desea Suspenderlo? S/N');&amp;#10;     	 If (Resp = 1) Then&amp;#10;     	  suspension; &amp;#10;     	  messagebox('contrato ha sido suspendido satisfactorianete');&amp;#10;     	 else      	 	&amp;#10;     	 	RAISE FORM_TRIGGER_FAILURE;     	 	&amp;#10;     	 end if;            &amp;#10;     --	MESSAGEBOX('CONTRATO '||:CONTROL.N_CONT||' HAY QUE SUPENDERLO YA QUE EL VALOR TOTAL DE SUS MULTAS SOBREPASAN EL PORCENTAJE '||PORC);&amp;#10;     --	RAISE FORM_TRIGGER_FAILURE;&amp;#10;     ELSE &amp;#10;     	VALOR :=  NVL (VALORSUSP,0) + NVL (:MULT_CONT.VALOR,0);&amp;#10;     	IF   NVL(TOTALSUSP,0) &lt;  NVL (VALOR,0) THEN &amp;#10;     		Resp := Preguntar ('el contrato ya tiene 2 multa se va suspender . Desea Suspenderlo? S/N');     	&amp;#10;     		If (Resp = 1) Then     				&amp;#10;     	  suspension; &amp;#10;     	  messagebox('contrato ha sido suspendido satisfactorianete');&amp;#10;     		else &amp;#10;     			RAISE FORM_TRIGGER_FAILURE;&amp;#10;     	 end if;      &amp;#10;     	  --MESSAGEBOX ('CONTRATO '||:CONTROL.N_CONT||' YA TIENE 2 MULTAS Y CON EL VALOR DE ESTA SOBREPASA EL PORCENTAJE DE SUSPENSION '||PORC); &amp;#10;     	  --RAISE FORM_TRIGGER_FAILURE;&amp;#10;     	END IF;     	&amp;#10;     END IF;    &amp;#10;  /* ELSE&amp;#10;     /*IF NVL(TOTALSUSP,0) &lt; NVL(:MULT_CONT.VALOR,0) THEN &amp;#10;     	  MESSAGEBOX('CONTRATO '||:CONTROL.N_CONT ||' NO SE PUEDE SUSPENDER POR ESE VALOR SOBREPASA EL PORCENTAJE '||PORC);&amp;#10;     	RAISE FORM_TRIGGER_FAILURE;  	&amp;#10;     END IF;&amp;#10;  END IF;   */&amp;#10; end if;    &amp;#10;END;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="OBS" DirtyInfo="true" Height="14" XPosition="261" PromptFontName="Tahoma" PromptFontSpacing="Normal" PromptFontSize="800" Width="222" PromptAlignOffset="-16" Required="true" ColumnName="OBS" DistanceBetweenRecords="0" YPosition="161" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="60" PromptAttachmentOffset="-17" ItemType="Área del Usuario" TabPageName="" CanvasName="MULTAS" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="KEY-NEXT-ITEM" TriggerText="GO_ITEM('MULT_CONT.FECHA');" DirtyInfo="true"/>
+         </Item>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_EMP" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_AGR" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="12" DSCPrecision="0" DSCName="N_IDE" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="16" DSCPrecision="0" DSCName="N_CONT" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="DATE" DSCNochildren="false" DSCLength="0" DSCPrecision="0" DSCName="FECHA" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="NUMBER" DSCNochildren="false" DSCLength="0" DSCPrecision="14" DSCName="VALOR" DSCScale="2" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="60" DSCPrecision="0" DSCName="OBS" DSCScale="0" DSCMandatory="true"/>
+         <Trigger Name="PRE-INSERT" TriggerText=" :mult_cont.c_emp  := :global.empresa;&amp;#10; :mult_cont.c_agr  := :control.c_agr;&amp;#10; :mult_cont.n_ide  := :control.n_ide;&amp;#10; :mult_cont.n_cont := :control.n_cont;     	&amp;#10;" DirtyInfo="true"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="MULTAS" ViewportHeight="324" DirtyInfo="true" Height="600" WindowName="WINDOW0" Width="800" ViewportWidth="540" CanvasType="Contenido">
+         <Graphics Name="GRAPHIC8" GraphicsText="APLICAR MULTAS A UN CONTRATO" Height="10" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="white" Width="94" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="1200" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="1" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="357" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="28" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT6">
+               <TextSegment Name="TEXTSTR7" FontSize="1200" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="APLICAR MULTAS A UN CONTRATO" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT5" GraphicsText="APLICAR MULTAS A UN CONTRATO" Height="15" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="210" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="1200" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="357" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="29" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT6">
+               <TextSegment Name="TEXTSTR7" FontSize="1200" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="APLICAR MULTAS A UN CONTRATO" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT10" GraphicsText="" Height="41" InternalLineWidth="113" VerticalMargin="14" GraphicsFontSpacing="Muy Denso" GraphicsFontColor="" Width="430" GraphicsFontWeight="Muy Clara" GraphicsFontSize="0" StartPromptOffset="7" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" Bevel="Ninguno" XPosition="61" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" YPosition="62" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" GraphicsFontName="" CornerRadiusX="10"/>
+         <Graphics Name="TEXT15" GraphicsText="Agencia" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="30" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="105" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="66" GraphicsType="Texto" BackColor="r75g88b100" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT16">
+               <TextSegment Name="TEXTSTR17" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Agencia" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="GRAPHIC18" GraphicsText="Proveedor" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="43" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="174" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="66" GraphicsType="Texto" BackColor="r75g88b100" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT16">
+               <TextSegment Name="TEXTSTR17" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="GRAPHIC19" GraphicsText="Nombre Proveedor" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="79" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="343" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="66" GraphicsType="Texto" BackColor="r75g88b100" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT16">
+               <TextSegment Name="TEXTSTR17" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Nombre Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="GRAPHIC20" GraphicsText="Contrato" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="36" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="465" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="66" GraphicsType="Texto" BackColor="r75g88b100" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT16">
+               <TextSegment Name="TEXTSTR17" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT32" GraphicsText="" Height="115" InternalLineWidth="113" VerticalMargin="14" GraphicsFontSpacing="Muy Denso" GraphicsFontColor="" ForegroundColor="darkcyan" Width="430" GraphicsFontWeight="Muy Clara" GraphicsFontSize="0" StartPromptOffset="7" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="62" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" YPosition="135" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" GraphicsFontName="" CornerRadiusX="10"/>
+         <Graphics Name="TEXT39" GraphicsText="Observacion" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="52" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" EdgeBackColor="white" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="398" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="145" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT40">
+               <TextSegment Name="TEXTSTR41" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Observacion" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT33" GraphicsText="Fecha" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="24" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" EdgeBackColor="white" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="122" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="145" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT34">
+               <TextSegment Name="TEXTSTR35" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Fecha" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT36" GraphicsText="Valor Multa" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r0g0b50" Width="47" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="14" HorizontalObjectOffset="14" EdgeBackColor="white" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="227" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" BoundingBoxScalable="false" EdgePattern="none" YPosition="145" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha">
+            <CompoundText Name="CMPTXT37">
+               <TextSegment Name="TEXTSTR38" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r0g0b50" FontWeight="Negrita" FontStyle="Normal" Text="Valor Multa" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+      </Canvas>
+      <LOV Name="CONTRATO" ParentType="29" RecordGroupName="CONTRATO" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR027" AutoPosition="true" ParentModuleType="12">
+         <LOVColumnMapping Name="N_CONT" DirtyInfo="true" ReturnItem="CONTROL.N_CONT" DisplayWidth="115" Title="N_Cont"/>
+      </LOV>
+      <LOV Name="N_IDE" ParentType="29" RecordGroupName="N_IDE" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR027" AutoPosition="true" ParentModuleType="12">
+         <LOVColumnMapping Name="N_IDE" DirtyInfo="true" ReturnItem="CONTROL.N_IDE" DisplayWidth="88" Title="N_Ide"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="CONTROL.NOMBRE" DisplayWidth="2000" Title="Nom"/>
+      </LOV>
+      <LOV Name="AGENCIA" ParentType="29" RecordGroupName="AGENCIA" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR027" AutoPosition="true" ParentModuleType="12">
+         <LOVColumnMapping Name="C_AGE" DirtyInfo="true" ReturnItem="CONTROL.C_AGR" DisplayWidth="20" Title="C_Age"/>
+      </LOV>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN	&amp;#10;		GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;  	Create_record;  &amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10; /* Res := 1;&amp;#10;  If (:System.form_status = 'CHANGED' Or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form (No_Validate); &amp;#10;    Inicio;    &amp;#10;  End If;*/&amp;#10;  clear_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE INICIO IS&amp;#10;BEGIN	&amp;#10;	Set_Window_Property ('WINDOW0', WINDOW_STATE, MAXIMIZE);&amp;#10;  Execute_Trigger('INIT');  &amp;#10;  :mult_cont.fecha := sysdate;&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;  list_id   ParamList;&amp;#10;BEGIN&amp;#10; null;&amp;#10;END;"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;res number;&amp;#10;BEGIN   &amp;#10;   Commit_Form;&amp;#10;  limpiar;&amp;#10;END;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;  Execute_Query (All_records); &amp;#10;END;&amp;#10;"/>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  	Res := Preguntar('Desea Eliminar Este Registro?');&amp;#10;  	If Res = 1 Then&amp;#10;  		GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;	    Delete_record;   &amp;#10;  	End If;&amp;#10;END;"/>
+      <ProgramUnit Name="SUSPENSION" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE suspension IS&amp;#10;cont       varchar2(16);&amp;#10;novedad    varchar2(1);&amp;#10;fec        date;&amp;#10;fecini     date;&amp;#10;BEGIN&amp;#10;	  &amp;#10;	       /*select to_char(sysdate,'DD/MM/YYYY')&amp;#10;	        into   fec  &amp;#10;	        from dual;*/  &amp;#10;	      begin&amp;#10;      		Insert Into CONT_CXP_SUSP&amp;#10;         	(C_Emp, n_cont, tipo_novedad, fecha, fecha_ini)&amp;#10;       		Values&amp;#10;         	(:global.empresa,:control.n_cont,'S',:mult_cont.fecha,:mult_cont.fecha);&amp;#10;         	Exception&amp;#10;     	 	When Dup_Val_On_Index Then&amp;#10;     	 	messagebox('ya este contrato esta suspendido. revise');&amp;#10;     	 	raise form_trigger_failure;&amp;#10;     	 	end;&amp;#10;END;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <RecordGroup Name="AGENCIA" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select c_age from agencia&amp;#10;where  c_emp = :global.empresa">
+         <RecordGroupColumn Name="C_AGE" DirtyInfo="true" MaximumLength="2" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="N_IDE" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select  distinct n_ide,trae_nombre(c_emp,n_ide) nom&amp;#10;from     cont_cxp &amp;#10;where  c_emp = :global.empresa &amp;#10;order by nom&amp;#10;&amp;#10;">
+         <RecordGroupColumn Name="N_IDE" DirtyInfo="true" MaximumLength="12" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="2000" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="CONTRATO" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select   n_cont &amp;#10;from     cont_cxp&amp;#10;where    c_emp = :global.empresa &amp;#10;and      n_ide = :control.n_ide ">
+         <RecordGroupColumn Name="N_CONT" DirtyInfo="true" MaximumLength="16" ColumnDataType="Character"/>
+      </RecordGroup>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" TriggerText="Declare&amp;#10;  Empresa     	Parametros.Emp%Type;&amp;#10;  LogoPath			Varchar2 (200);  &amp;#10;Begin&amp;#10;  --&amp;#10;  -- Maximiza la ventana inicial&amp;#10;  --&amp;#10;  :SYSTEM.MESSAGE_LEVEL:=20;&amp;#10;  Set_Window_Property ('WINDOW0', Window_State, Maximize);&amp;#10;  &amp;#10;  --&amp;#10;  -- Selecciona el nombre de la empresa&amp;#10;  --&amp;#10; -- :GLOBAL.empresa := '08';&amp;#10;  :TOOLBAR.c_emp  := :GLOBAL.empresa;&amp;#10;    Begin&amp;#10;    Select Emp, logo Into Empresa, :toolbar.nombre_logo&amp;#10;      From Parametros&amp;#10;      Where C_Emp = :TOOLBAR.c_emp;&amp;#10;  Exception&amp;#10;    When no_data_found Then&amp;#10;      --&amp;#10;      -- Si la empresa no está definida se sale de la forma&amp;#10;      --&amp;#10;      MessageBox ('Empresa '||:TOOLBAR.c_emp||' no está definida.');&amp;#10;      Exit_Form (No_Validate);     &amp;#10;  End;&amp;#10;  --&amp;#10;  -- Despliega el nombre de la empresa en una o dos líneas&amp;#10;  -- dependiendo de la longitud del nombre&amp;#10;  --&amp;#10;  :Toolbar.Nombre_Empresa1 := Empresa;&amp;#10;  :Toolbar.Nombre_Empresa2 := Empresa;&amp;#10;  If (NVL(Length (:Toolbar.Nombre_Empresa1), 0) > 30) Then&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, Property_True);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, Property_False);&amp;#10;  Else&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, property_False);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, property_True);&amp;#10;  End If;&amp;#10;  --&amp;#10;  -- Despliega el logo de la empresa&amp;#10;  --&amp;#10;  execute_trigger('lee_imagenes');&amp;#10;&amp;#10;  --&amp;#10;  -- Llama al procedimiento de inicio particular de cada forma&amp;#10;  --&amp;#10;  Default_Value ('***', 'global.audsid'); &amp;#10;  Begin&amp;#10;  	Select machine Into Empresa&amp;#10;      From v$usr_sess&amp;#10;      Where audsid = :Global.audsid;&amp;#10;  Exception&amp;#10;    When others Then&amp;#10;    Exit_Form (No_Validate);            &amp;#10; --  Null;&amp;#10;  End;&amp;#10;End;" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="CURR_RECORD" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Window Name="WINDOW0" DirtyInfo="true" Height="600" Width="800"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>

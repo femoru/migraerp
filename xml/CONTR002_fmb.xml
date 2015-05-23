@@ -1,0 +1,223 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="CONTR002" ConsoleWindow="WINDOW0" RecordVisualAttributeGroupName="" DirtyInfo="true" RuntimeComp="4.5" MenuModule="Mppal" ValidationUnit="Por Defecto" MouseNavigationLimit="Pantalla" CursorMode="Abrir" MenuRole="" Title="Actualización Requerimientos " InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="6" CoordinateSystem="Real" CharacterCellHeight="17" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="GREQ_ENC" DirtyInfo="true" QueryDataSourceName="GREQ_ENC" ScrollbarWidth="9" ScrollbarLength="135" OrderByClause="c_emp, cod_greq">
+         <Item Name="COD_GREQ" AutoHint="true" DirtyInfo="true" Height="14" XPosition="123" LovName="" Width="50" Required="true" ColumnName="COD_GREQ" DistanceBetweenRecords="20" YPosition="99" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" Hint="Indique un código para agrupar requisitos o trámites de contratación   -  Presione Lupa para buscar datos existentes" PromptDisplayStyle="Todos los Registros" MaximumLength="10" ItemsDisplay="0" PromptAttachmentOffset="5" ItemType="Área del Usuario" CaseRestriction="Superior" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM" AutoHint="true" DirtyInfo="true" Height="14" XPosition="177" Width="241" Required="true" ColumnName="NOM" DistanceBetweenRecords="20" YPosition="99" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" Hint="Indique la descripción del grupo de requerimientos o trámites a crear" PromptDisplayStyle="Todos los Registros" ItemsDisplay="0" MaximumLength="100" PromptAttachmentOffset="5" ItemType="Área del Usuario" CaseRestriction="Superior" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="OBLIGA" AutoHint="true" Height="14" PromptFontName="Arial" ForegroundColor="white" Width="11" ColumnName="OBLIGA" FontSpacing="Normal" Hint="Chequee si el grupo de requisitos es obligatorio. En caso contrario no lo chequee." CheckedValue="S" MaximumLength="1" FontWeight="Negrita" ItemType="Elemento de Gráfico" PromptForegroundColor="r25g0b75" Prompt="Obliga" FontSize="800" DirtyInfo="true" XPosition="421" FontName="Century Gothic" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-15" YPosition="99" BackColor="r75g88b100" InitializeValue="N" PromptAttachmentOffset="-14" UncheckedValue="N" FontStyle="Normal" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="C_EMP" DirtyInfo="true" Height="14" Visible="false" MaximumLength="2" Width="14" ItemType="Área del Usuario" Required="true" Prompt="C Emp" ColumnName="C_EMP"/>
+         <Item Name="USR" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" Prompt="" ColumnName=""/>
+         <Item Name="FEC_PROC" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" DataType="Datetime" Prompt="" ColumnName="" FormatMask="DD-MM-YYYY HH24:MI:SS"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_EMP" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_GREQ" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="40" DSCPrecision="0" DSCName="NOM" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="OBLIGA" DSCScale="0" DSCMandatory="false"/>
+         <Relation Name="GREQ_ENC_GREQ_DET" RelationType="Unión" DirtyInfo="true" DeleteRecord="No Aislado" DetailBlock="GREQ_DET" AutoQuery="false" PreventMasterlessOperations="false" Deferred="false" JoinCondition="GREQ_DET.C_EMP = GREQ_ENC.C_EMP AND&amp;#10;GREQ_DET.COD_GREQ = GREQ_ENC.COD_GREQ"/>
+         <Trigger Name="PRE-INSERT" TriggerText=":Greq_enc.C_emp := :global.empresa;&amp;#10;:Greq_enc.usr := :global.usuario_sp6;&amp;#10; :Greq_ENC.FEc_PROC := SYSDATE;&amp;#10;" DirtyInfo="true"/>
+         <Trigger Name="PRE-UPDATE" TriggerText=" :Greq_ENC.usr := :global.usuario_sp6;&amp;#10; :Greq_ENC.FEc_PROC := SYSDATE;&amp;#10; &amp;#10; " DirtyInfo="true"/>
+         <Trigger Name="ON-POPULATE-DETAILS" TriggerText="--&amp;#10;-- Begin default relation declare section&amp;#10;--&amp;#10;DECLARE&amp;#10;  recstat     VARCHAR2(20) := :System.record_status;   &amp;#10;  startitm    VARCHAR2(61) := :System.cursor_item;   &amp;#10;  rel_id      Relation;&amp;#10;--&amp;#10;-- End default relation declare section&amp;#10;--&amp;#10;--&amp;#10;-- Begin default relation program section&amp;#10;--&amp;#10;BEGIN&amp;#10;  IF ( recstat = 'NEW' or recstat = 'INSERT' ) THEN   &amp;#10;    RETURN;&amp;#10;  END IF;&amp;#10;  --&amp;#10;  -- Begin GREQ_DET detail program section&amp;#10;  --&amp;#10;  IF ( (:GREQ_ENC.C_EMP is not null) or (:GREQ_ENC.COD_GREQ is not null) ) THEN   &amp;#10;    rel_id := Find_Relation('GREQ_ENC.GREQ_ENC_GREQ_DET');   &amp;#10;    Query_Master_Details(rel_id, 'GREQ_DET');   &amp;#10;  END IF;&amp;#10;  --&amp;#10;  -- End GREQ_DET detail program section&amp;#10;  --&amp;#10;&amp;#10;  IF ( :System.cursor_item &lt;> startitm ) THEN     &amp;#10;     Go_Item(startitm);     &amp;#10;     Check_Package_Failure;     &amp;#10;  END IF;&amp;#10;END;&amp;#10;--&amp;#10;-- End default relation program section&amp;#10;--&amp;#10;" DirtyInfo="true"/>
+         <Trigger Name="ON-CHECK-DELETE-MASTER" TriggerText="--&amp;#10;-- Begin default relation declare section&amp;#10;--&amp;#10;DECLARE&amp;#10;  Dummy_Define CHAR(1);&amp;#10;  --&amp;#10;  -- Begin GREQ_DET detail declare section&amp;#10;  --&amp;#10;  CURSOR GREQ_DET_cur IS      &amp;#10;    SELECT 1 FROM greq_det g     &amp;#10;    WHERE g.C_EMP = :GREQ_ENC.C_EMP and g.COD_GREQ = :GREQ_ENC.COD_GREQ;&amp;#10;  --&amp;#10;  -- End GREQ_DET detail declare section&amp;#10;  --&amp;#10;--&amp;#10;-- End default relation declare section&amp;#10;--&amp;#10;--&amp;#10;-- Begin default relation program section&amp;#10;--&amp;#10;BEGIN&amp;#10;  --&amp;#10;  -- Begin GREQ_DET detail program section&amp;#10;  --&amp;#10;  OPEN GREQ_DET_cur;     &amp;#10;  FETCH GREQ_DET_cur INTO Dummy_Define;     &amp;#10;  IF ( GREQ_DET_cur%found ) THEN     &amp;#10;    Message('Cannot delete master record when matching detail records exist.');     &amp;#10;    CLOSE GREQ_DET_cur;     &amp;#10;    RAISE Form_Trigger_Failure;     &amp;#10;  END IF;&amp;#10;  CLOSE GREQ_DET_cur;&amp;#10;  --&amp;#10;  -- End GREQ_DET detail program section&amp;#10;  --&amp;#10;END;&amp;#10;--&amp;#10;-- End default relation program section&amp;#10;--&amp;#10;" DirtyInfo="true"/>
+      </Block>
+      <Block Name="GREQ_DET" ScrollbarTabPageName="" DirtyInfo="true" ScrollbarWidth="8" ScrollbarXPosition="458" OrderByClause="C_EMP,COD_GREQ,ORDEN" BackColor="r75g88b100" QueryDataSourceName="greq_det" ScrollbarYPosition="154" ShowScrollbar="true" ScrollbarCanvasName="PRINCIPAL" RecordsDisplayCount="10" ScrollbarLength="140">
+         <Item Name="C_EMP" DirtyInfo="true" Height="14" CopyValueFromItem="GREQ_ENC.C_EMP" MaximumLength="2" Width="14" ItemType="Área del Usuario" Required="true" Prompt="C Emp" ColumnName="C_EMP"/>
+         <Item Name="COD_GREQ" DirtyInfo="true" Height="14" CopyValueFromItem="GREQ_ENC.COD_GREQ" MaximumLength="10" Width="50" ItemType="Área del Usuario" Required="true" Prompt="Cod Greq" ColumnName="COD_GREQ"/>
+         <Item Name="COD_REQ" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="50" ColumnName="COD_REQ" Hint="Indique un código de requisito" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Requisito" DirtyInfo="true" XPosition="97" PromptFontSize="800" PromptFontSpacing="Normal" Required="true" VisualAttributeName="NORMAL" YPosition="154" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="ORDEN" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="26" ColumnName="ORDEN" Hint="Indique la descripción del documento o trámite" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="3" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Orden" DirtyInfo="true" XPosition="150" PromptFontSize="800" PromptFontSpacing="Normal" Required="true" DataType="Number" YPosition="154" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="POST-TEXT-ITEM" TriggerText="If :system.record_status in ('NEW','INSERT') Then&amp;#10;	:greq_det.estado := 'A';&amp;#10;	:greq_det.opcional := 'N';&amp;#10;End If;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="ESTADO" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" ForegroundColor="black" Width="14" ColumnName="ESTADO" FontSpacing="Normal" Hint="Chequee el item para indicar que es Activo, si es Inactivo no lo chequee." PromptDisplayStyle="Primer Registro" CheckedValue="A" ItemsDisplay="0" MaximumLength="1" FontWeight="Negrita" ItemType="Elemento de Gráfico" PromptForegroundColor="r25g0b75" Prompt="Estado" FontSize="800" DirtyInfo="true" XPosition="189" FontName="Century Gothic" PromptFontSpacing="Normal" PromptFontSize="800" YPosition="154" BackColor="r75g88b100" InitializeValue="A" PromptAttachmentEdge="Arriba" UncheckedValue="I" FontStyle="Normal" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="NOM" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="205" ColumnName="NOM" Hint="Suministre una descripción que identifique el requisito " PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="100" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Descripción" DirtyInfo="true" XPosition="216" PromptFontSize="800" PromptFontSpacing="Normal" Required="true" VisualAttributeName="NORMAL" YPosition="154" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="OPCIONAL" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" ForegroundColor="black" Width="11" ColumnName="OPCIONAL" FontSpacing="Normal" Hint="Chequee el item si es Obligatorio, si es opcional no lo chequee." PromptDisplayStyle="Primer Registro" CheckedValue="S" ItemsDisplay="0" MaximumLength="1" FontWeight="Negrita" ItemType="Elemento de Gráfico" PromptForegroundColor="r25g0b75" Prompt="Opcional" FontSize="800" DirtyInfo="true" XPosition="436" FontName="Century Gothic" PromptFontSpacing="Normal" PromptFontSize="800" PromptAlignOffset="-2" YPosition="154" BackColor="r75g88b100" InitializeValue="N" PromptAttachmentEdge="Arriba" UncheckedValue="N" FontStyle="Normal" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="USR" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" Prompt="" ColumnName=""/>
+         <Item Name="FEC_PROC" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" DataType="Datetime" Prompt="" ColumnName="" FormatMask="DD-MM-YYYY HH24:MI:SS"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_EMP" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_GREQ" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_REQ" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="NUMBER" DSCNochildren="false" DSCLength="0" DSCPrecision="2" DSCName="ORDEN" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="ESTADO" DSCScale="0" DSCMandatory="false"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="40" DSCPrecision="0" DSCName="NOM" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="1" DSCPrecision="0" DSCName="OPCIONAL" DSCScale="0" DSCMandatory="false"/>
+         <Trigger Name="PRE-INSERT" TriggerText=":Greq_det.C_emp := :global.empresa;&amp;#10;:Greq_det.usr := :global.usuario_sp6;&amp;#10; :Greq_DET.FEc_PROC := SYSDATE;&amp;#10;" DirtyInfo="true"/>
+         <Trigger Name="PRE-UPDATE" TriggerText=" :Greq_det.usr := :global.usuario_sp6;&amp;#10; :Greq_DET.FEc_PROC := SYSDATE;&amp;#10;" DirtyInfo="true"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="PRINCIPAL" ViewportHeight="198" ViewportXPosition="10" WindowName="WINDOW0" Height="500" DirtyInfo="true" Bevel="Hundido" ViewportYPosition="55" Width="800" ViewportWidth="439" CanvasType="Contenido" VisualAttributeName="DEFAULT" BackColor="gray20" ShowHorizontalScrollbar="false" ShowVerticalScrollbar="false">
+         <Graphics Name="GRAPHIC302" GraphicsText="REQUERIMIENTOS DE CONTRATACION" VerticalOrigin="Superior" InternalLineWidth="227" Height="12" VerticalMargin="14" GraphicsFontColor="white" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="155" InternalRotationAngle="0" HorizontalJustification="Centro" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="1" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="black" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="139" Bevel="Sin Relieve" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="35" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="black" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT20">
+               <TextSegment Name="TEXTSTR21" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="REQUERIMIENTOS DE CONTRATACION" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="RECT1" GraphicsText="" Height="244" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="black" Width="418" InternalRotationAngle="0" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="5" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="9" EdgeBackColor="black" CapStyle="Plana" DirtyInfo="true" XPosition="70" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" DashStyle="Sólido" EdgePattern="solid" YPosition="75" GraphicsType="Rectángulo" BackColor="r75g88b100" EdgeForegroundColor="yellow" GraphicsFontName="" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT3" GraphicsText="Código   Grupo Requerimientos y/o trámites" VerticalOrigin="Superior" InternalLineWidth="0" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="182" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="black" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="123" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="84" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Inglete">
+            <CompoundText Name="CMPTXT4">
+               <TextSegment Name="TEXTSTR5" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Código   Grupo Requerimientos y/o trámites" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT19" GraphicsText="REQUERIMIENTOS DE CONTRATACION" VerticalOrigin="Superior" InternalLineWidth="227" Height="12" VerticalMargin="14" GraphicsFontColor="darkblue" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="188" InternalRotationAngle="0" HorizontalJustification="Centro" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="79" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="black" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="141" Bevel="Sin Relieve" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="37" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="black" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT20">
+               <TextSegment Name="TEXTSTR21" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="REQUERIMIENTOS DE CONTRATACION" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="FRAME285" GraphicsText="" FrameTitleOffset="9" Height="185" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="383" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="5" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="0" EdgeBackColor="white" LayoutStyle="Tabular" DirtyInfo="true" XPosition="90" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="9" HorizontalMargin="5" FrameTitleSpacing="5" EdgePattern="solid" YPosition="123" GraphicsType="Marco" BackColor="r0g100b0" EdgeForegroundColor="r25g0b75" GraphicsFontName=""/>
+      </Canvas>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE inicio IS&amp;#10;BEGIN&amp;#10;  Execute_Trigger('INIT');&amp;#10;  Go_Block('Greq_enc');&amp;#10;  Buscar;&amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN&amp;#10;  GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);&amp;#10;  Create_record;&amp;#10;END;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 1;&amp;#10;  If (:System.form_status = 'CHANGED' or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form(no_validate);&amp;#10;  Inicio;&amp;#10;  End If;&amp;#10;END;"/>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;BEGIN&amp;#10;  GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);&amp;#10;  Delete_record;&amp;#10;END;"/>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;--	messagebox(:system.record_status|| ' '||:system.form_status||' '||:system.block_status);&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;Begin&amp;#10;  Commit; &amp;#10;End;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;   go_block('Greq_enc');&amp;#10;   If Form_Success Then&amp;#10;     clear_block(No_Validate);&amp;#10;     Execute_Query(All_Records);&amp;#10;   End If;&amp;#10;END;"/>
+      <ProgramUnit Name="LLENAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE llenar IS&amp;#10;  mes VARCHAR2(2);&amp;#10;  i   number(2);&amp;#10;BEGIN&amp;#10;   null;&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="CHECK_PACKAGE_FAILURE" ProgramUnitType="Procedimiento" ProgramUnitText="Procedure Check_Package_Failure IS&amp;#10;BEGIN&amp;#10;  IF NOT ( Form_Success ) THEN&amp;#10;    RAISE Form_Trigger_Failure;&amp;#10;  END IF;&amp;#10;END;"/>
+      <ProgramUnit Name="QUERY_MASTER_DETAILS" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE Query_Master_Details(rel_id Relation,detail VARCHAR2) IS&amp;#10;  oldmsg VARCHAR2(2);  -- Old Message Level Setting&amp;#10;  reldef VARCHAR2(5);  -- Relation Deferred Setting&amp;#10;BEGIN&amp;#10;  --&amp;#10;  -- Initialize Local Variable(s)&amp;#10;  --&amp;#10;  reldef := Get_Relation_Property(rel_id, DEFERRED_COORDINATION);&amp;#10;  oldmsg := :System.Message_Level;&amp;#10;  --&amp;#10;  -- If NOT Deferred, Goto detail and execute the query.&amp;#10;  --&amp;#10;  IF reldef = 'FALSE' THEN&amp;#10;    Go_Block(detail);&amp;#10;    Check_Package_Failure;&amp;#10;    :System.Message_Level := '10';&amp;#10;    Execute_Query;&amp;#10;    :System.Message_Level := oldmsg;&amp;#10;  ELSE&amp;#10;    --&amp;#10;    -- Relation is deferred, mark the detail block as un-coordinated&amp;#10;    --&amp;#10;    Set_Block_Property(detail, COORDINATION_STATUS, NON_COORDINATED);&amp;#10;  END IF;&amp;#10;&amp;#10;EXCEPTION&amp;#10;    WHEN Form_Trigger_Failure THEN&amp;#10;      :System.Message_Level := oldmsg;&amp;#10;      RAISE;&amp;#10;END Query_Master_Details;&amp;#10;"/>
+      <ProgramUnit Name="CLEAR_ALL_MASTER_DETAILS" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE Clear_All_Master_Details IS&amp;#10;  mastblk  VARCHAR2(30);  -- Initial Master Block Causing Coord&amp;#10;  coordop  VARCHAR2(30);  -- Operation Causing the Coord&amp;#10;  trigblk  VARCHAR2(30);  -- Cur Block On-Clear-Details Fires On&amp;#10;  startitm VARCHAR2(61);  -- Item in which cursor started&amp;#10;  frmstat  VARCHAR2(15);  -- Form Status&amp;#10;  curblk   VARCHAR2(30);  -- Current Block&amp;#10;  currel   VARCHAR2(30);  -- Current Relation&amp;#10;  curdtl   VARCHAR2(30);  -- Current Detail Block&amp;#10;&amp;#10;  FUNCTION First_Changed_Block_Below(Master VARCHAR2)&amp;#10;  RETURN VARCHAR2 IS&amp;#10;    curblk VARCHAR2(30);  -- Current Block&amp;#10;    currel VARCHAR2(30);  -- Current Relation&amp;#10;    retblk VARCHAR2(30);  -- Return Block&amp;#10;  BEGIN&amp;#10;    --&amp;#10;    -- Initialize Local Vars&amp;#10;    --&amp;#10;    curblk := Master;&amp;#10;    currel := Get_Block_Property(curblk,  FIRST_MASTER_RELATION);&amp;#10;    --&amp;#10;    -- While there exists another relation for this block&amp;#10;    --&amp;#10;    WHILE currel IS NOT NULL LOOP&amp;#10;      --&amp;#10;      -- Get the name of the detail block&amp;#10;      --&amp;#10;      curblk := Get_Relation_Property(currel, DETAIL_NAME);&amp;#10;      --&amp;#10;      -- If this block has changes, return its name&amp;#10;      --&amp;#10;      IF ( Get_Block_Property(curblk, STATUS) = 'CHANGED' ) THEN&amp;#10;        RETURN curblk;&amp;#10;      ELSE&amp;#10;        --&amp;#10;        -- No changes, recursively look for changed blocks below&amp;#10;        --&amp;#10;        retblk := First_Changed_Block_Below(curblk);&amp;#10;        --&amp;#10;        -- If some block below is changed, return its name&amp;#10;        --&amp;#10;        IF retblk IS NOT NULL THEN&amp;#10;          RETURN retblk;&amp;#10;        ELSE&amp;#10;          --&amp;#10;          -- Consider the next relation&amp;#10;          --&amp;#10;          currel := Get_Relation_Property(currel, NEXT_MASTER_RELATION);&amp;#10;        END IF;&amp;#10;      END IF;&amp;#10;    END LOOP;&amp;#10;&amp;#10;    --&amp;#10;    -- No changed blocks were found&amp;#10;    --&amp;#10;    RETURN NULL;&amp;#10;  END First_Changed_Block_Below;&amp;#10;&amp;#10;BEGIN&amp;#10;  --&amp;#10;  -- Init Local Vars&amp;#10;  --&amp;#10;  mastblk  := :System.Master_Block;&amp;#10;  coordop  := :System.Coordination_Operation;&amp;#10;  trigblk  := :System.Trigger_Block;&amp;#10;  startitm := :System.Cursor_Item;&amp;#10;  frmstat  := :System.Form_Status;&amp;#10;&amp;#10;  --&amp;#10;  -- If the coordination operation is anything but CLEAR_RECORD or&amp;#10;  -- SYNCHRONIZE_BLOCKS, then continue checking.&amp;#10;  --&amp;#10;  IF coordop NOT IN ('CLEAR_RECORD', 'SYNCHRONIZE_BLOCKS') THEN&amp;#10;    --&amp;#10;    -- If we're processing the driving master block...&amp;#10;    --&amp;#10;    IF mastblk = trigblk THEN&amp;#10;      --&amp;#10;      -- If something in the form is changed, find the&amp;#10;      -- first changed block below the master&amp;#10;      --&amp;#10;      IF frmstat = 'CHANGED' THEN&amp;#10;        curblk := First_Changed_Block_Below(mastblk);&amp;#10;        --&amp;#10;        -- If we find a changed block below, go there&amp;#10;        -- and Ask to commit the changes.&amp;#10;        --&amp;#10;        IF curblk IS NOT NULL THEN&amp;#10;          Go_Block(curblk);&amp;#10;          Check_Package_Failure;&amp;#10;          Clear_Block(ASK_COMMIT);&amp;#10;          --&amp;#10;          -- If user cancels commit dialog, raise error&amp;#10;          --&amp;#10;          IF NOT ( :System.Form_Status = 'QUERY'&amp;#10;                   OR :System.Block_Status = 'NEW' ) THEN&amp;#10;            RAISE Form_Trigger_Failure;&amp;#10;          END IF;&amp;#10;        END IF;&amp;#10;      END IF;&amp;#10;    END IF;&amp;#10;  END IF;&amp;#10;&amp;#10;  --&amp;#10;  -- Clear all the detail blocks for this master without&amp;#10;  -- any further asking to commit.&amp;#10;  --&amp;#10;  currel := Get_Block_Property(trigblk, FIRST_MASTER_RELATION);&amp;#10;  WHILE currel IS NOT NULL LOOP&amp;#10;    curdtl := Get_Relation_Property(currel, DETAIL_NAME);&amp;#10;    IF Get_Block_Property(curdtl, STATUS) &lt;> 'NEW'  THEN&amp;#10;      Go_Block(curdtl);&amp;#10;      Check_Package_Failure;&amp;#10;      Clear_Block(NO_VALIDATE);&amp;#10;      IF :System.Block_Status &lt;> 'NEW' THEN&amp;#10;        RAISE Form_Trigger_Failure;&amp;#10;      END IF;&amp;#10;    END IF;&amp;#10;    currel := Get_Relation_Property(currel, NEXT_MASTER_RELATION);&amp;#10;  END LOOP;&amp;#10;&amp;#10;  --&amp;#10;  -- Put cursor back where it started&amp;#10;  --&amp;#10;  IF :System.Cursor_Item &lt;> startitm THEN&amp;#10;    Go_Item(startitm);&amp;#10;    Check_Package_Failure;&amp;#10;  END IF;&amp;#10;&amp;#10;EXCEPTION&amp;#10;  WHEN Form_Trigger_Failure THEN&amp;#10;    IF :System.Cursor_Item &lt;> startitm THEN&amp;#10;      Go_Item(startitm);&amp;#10;    END IF;&amp;#10;    RAISE;&amp;#10;&amp;#10;END Clear_All_Master_Details;&amp;#10;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-CLEAR-DETAILS" TriggerText="--&amp;#10;-- Begin default relation program section&amp;#10;--&amp;#10;BEGIN&amp;#10;  Clear_All_Master_Details;&amp;#10;END;&amp;#10;--&amp;#10;-- End default relation program section&amp;#10;--&amp;#10;" DirtyInfo="true"/>
+      <VisualAttribute Name="CURR_RECORD" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Window Name="WINDOW0" MinimizeAllowed="true" Height="500" DirtyInfo="true" Bevel="Resaltado" HideOnExit="false" Width="800" InheritMenu="true" Title="Actualización Requerimientos " VisualAttributeName="DEFAULT" ClearAllowed="true" ShowHorizontalScrollbar="false" MaximizeAllowed="true" MinimizeTitle="Clases de Comprobantes" WindowStyle="Documento" ShowVerticalScrollbar="false" ResizeAllowed="true" MoveAllowed="true" IconFilename="Contab"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>

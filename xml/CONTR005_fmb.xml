@@ -1,0 +1,256 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="CONTR005" ConsoleWindow="WINDOW0" RecordVisualAttributeGroupName="" DirtyInfo="true" RuntimeComp="4.5" MenuModule="Mppal" ValidationUnit="Por Defecto" MouseNavigationLimit="Pantalla" CursorMode="Abrir" MenuRole="" Title="Requerimientos por Categoría" InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="6" CoordinateSystem="Real" CharacterCellHeight="17" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="REQ_CATEGORIA" ScrollbarTabPageName="" DirtyInfo="true" WhereClause="c_emp = :global.empresa" ScrollbarWidth="6" ScrollbarXPosition="553" OrderByClause="cod_cat,tipo_proc,tipo_cont" BackColor="r75g88b100" QueryDataSourceName="req_categoria" ScrollbarYPosition="107" ShowScrollbar="true" ScrollbarCanvasName="PRINCIPAL" RecordsDisplayCount="10" ScrollbarLength="138">
+         <Item Name="C_EMP" DirtyInfo="true" Height="14" MaximumLength="2" Width="14" ItemType="Área del Usuario" Required="true" Prompt="C Emp" ColumnName="C_EMP"/>
+         <Item Name="COD_CAT" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="39" ColumnName="COD_CAT" Hint="Indique la categoría a clasificar. O haga uso de la lista de valores" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Categoria" DirtyInfo="true" XPosition="6" PromptFontSize="800" PromptFontSpacing="Normal" LovName="LISTCAT" PromptAlignOffset="1" Required="true" ValidateFromList="true" YPosition="107" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="0" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="begin&amp;#10; If :req_categoria.cod_cat is not null then&amp;#10; begin&amp;#10;	  select descripcion&amp;#10;	  into :control.desc_cat&amp;#10;	  from categoria_ppto&amp;#10;	  where c_emp=:global.empresa&amp;#10;	    and ano = :CONTROL.ano&amp;#10;	    and cod_cat = :req_categoria.cod_cat;&amp;#10; exception when no_data_found then&amp;#10; 	 messagebox('Categoría No existe para el año en curso. Verifique');&amp;#10;   raise form_trigger_failure;&amp;#10; end;&amp;#10; End If;&amp;#10;End;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="TIPO_CONT" AutoHint="true" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="56" ColumnName="TIPO_CONT" Hint="Indique el tipo de control ó haga uso de la lista de valores" PromptDisplayStyle="Primer Registro" ItemsDisplay="0" MaximumLength="10" ItemType="Área del Usuario" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Tipo Control" DirtyInfo="true" XPosition="46" PromptFontSize="800" PromptFontSpacing="Normal" LovName="LISTCONTROL" PromptAlignOffset="2" Required="true" ValidateFromList="true" YPosition="107" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" PromptAttachmentOffset="-1" TabPageName="" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText=" If :req_categoria.tipo_cont is not null then&amp;#10;   begin&amp;#10; 	  Select descripcion&amp;#10; 	  into :control.desc_control&amp;#10; 	  from tipo_control&amp;#10; 	  where c_emp = :global.empresa&amp;#10; 	    and tipo_cont = :req_categoria.tipo_cont&amp;#10; 	    and tipo_proc = :req_categoria.tipo_proc;&amp;#10;   exception when no_data_found then&amp;#10;   	messagebox('Tipo de control de proceso no definido');&amp;#10;   	raise form_trigger_failure;&amp;#10;   end;&amp;#10; End If;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="TIPO_PROC" AutoHint="true" Height="14" PromptFontName="Arial" Width="64" ColumnName="TIPO_PROC" Hint="Indique el tipo de proceso" MaximumLength="10" ItemType="Árbol Jerárquico" CaseRestriction="Superior" PromptForegroundColor="r25g0b75" Prompt="Proceso" DirtyInfo="true" Justification="Principio" ListElementCount="4" XPosition="104" PromptFontSize="800" PromptFontSpacing="Normal" LovName="LISTCONTROL" PromptAlignOffset="-9" VisualAttributeName="NORMAL" YPosition="107" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-43" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="VALOR_INI" AutoHint="true" Height="14" PromptFontName="Arial" Width="80" ColumnName="VLR_INI" Hint="Indique el número de salarios mínimos a controlar en éste rango" MaximumLength="20" ItemType="Área del Usuario" PromptForegroundColor="r25g0b75" Prompt="Inicial" FormatMask="999G999G999G999D99" DirtyInfo="true" Justification="Derecha" XPosition="177" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-9" DataType="Number" VisualAttributeName="NORMAL" YPosition="106" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-47" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="declare valido varchar2(1);&amp;#10;begin&amp;#10;If :req_categoria.valor_ini is null then&amp;#10;	messagebox('Indique valor inicial del rango a controlar');&amp;#10;	raise form_trigger_failure;&amp;#10;Else&amp;#10;  :req_categoria.valorinipesos := :req_categoria.valor_ini * :control.salmin;&amp;#10;--Else&amp;#10;--	valida_rango(:req_categoria.valor_ini,valido);&amp;#10;--	If valido = 'N' then&amp;#10;--		messagebox('Valor fuera del rango definido para la categoría de presupuesto');&amp;#10;--		raise form_trigger_failure;&amp;#10;--	end If;&amp;#10;end if;&amp;#10;end;&amp;#10;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="VALORINIPESOS" AutoHint="true" Height="14" PromptFontName="Arial" Width="104" ColumnName="" Hint="Indique el número de salarios mínimos a controlar en éste rango" MaximumLength="25" ItemType="Área del Usuario" PromptForegroundColor="r25g0b75" Prompt=" Inicial" FormatMask="999G999G999G999G999G999G999G999D99" DirtyInfo="true" Justification="Derecha" XPosition="344" PromptFontSize="800" PromptFontSpacing="Normal" DatabaseItem="false" PromptAlignOffset="-9" DataType="Number" VisualAttributeName="NORMAL" YPosition="106" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-63" CanvasName="PRINCIPAL" PromptFontStyle="Normal" Enabled="false" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="declare valido varchar2(1);&amp;#10;begin&amp;#10;If :req_categoria.valor_ini is null then&amp;#10;	messagebox('Indique valor inicial del rango a controlar');&amp;#10;	raise form_trigger_failure;&amp;#10;--Else&amp;#10;--	valida_rango(:req_categoria.valor_ini,valido);&amp;#10;--	If valido = 'N' then&amp;#10;--		messagebox('Valor fuera del rango definido para la categoría de presupuesto');&amp;#10;--		raise form_trigger_failure;&amp;#10;--	end If;&amp;#10;end if;&amp;#10;end;&amp;#10;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="VALORFINPESOS" AutoHint="true" Height="14" PromptFontName="Arial" Width="104" ColumnName="" Hint="Indique el número de salarios mínimos a controlar en éste rango" MaximumLength="25" ItemType="Área del Usuario" PromptForegroundColor="r25g0b75" Prompt="Final" FormatMask="999G999G999G999G999G999G999G999D99" DirtyInfo="true" Justification="Derecha" XPosition="449" PromptFontSize="800" PromptFontSpacing="Normal" DatabaseItem="false" PromptAlignOffset="-9" DataType="Number" VisualAttributeName="NORMAL" YPosition="106" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-58" CanvasName="PRINCIPAL" PromptFontStyle="Normal" Enabled="false" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="declare valido varchar2(1);&amp;#10;begin&amp;#10;If :req_categoria.valor_ini is null then&amp;#10;	messagebox('Indique valor inicial del rango a controlar');&amp;#10;	raise form_trigger_failure;&amp;#10;--Else&amp;#10;--	valida_rango(:req_categoria.valor_ini,valido);&amp;#10;--	If valido = 'N' then&amp;#10;--		messagebox('Valor fuera del rango definido para la categoría de presupuesto');&amp;#10;--		raise form_trigger_failure;&amp;#10;--	end If;&amp;#10;end if;&amp;#10;end;&amp;#10;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="VALOR_FIN" AutoHint="true" Height="14" PromptFontName="Arial" Width="80" ColumnName="VLR_FIN" Hint="Indique el número de salarios máximo a tener en cuenta en éste rango" MaximumLength="22" ItemType="Área del Usuario" PromptForegroundColor="r25g0b75" Prompt="Final" FormatMask="999G999G999G999D99" DirtyInfo="true" Justification="Derecha" XPosition="257" PromptFontSize="800" PromptFontSpacing="Normal" PromptAlignOffset="-9" DataType="Number" VisualAttributeName="NORMAL" YPosition="106" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentOffset="-45" CanvasName="PRINCIPAL" PromptFontStyle="Normal" PromptFontWeight="Negrita">
+            <Trigger Name="WHEN-VALIDATE-ITEM" TriggerText="declare valido varchar2(1);&amp;#10;begin&amp;#10;If :req_categoria.valor_fin is not null and&amp;#10;	 :req_categoria.valor_fin &lt; :req_categoria.valor_ini then&amp;#10;	messagebox('Rango de valores inválido. Verifique');&amp;#10;	raise form_trigger_failure;&amp;#10;Else&amp;#10;	 If :req_categoria.valor_ini > :req_categoria.valor_fin then&amp;#10;	 	MessageBox('Rango Final inválido. Verifique');&amp;#10;	 	Raise Form_Trigger_Failure;&amp;#10;	 Else&amp;#10; 	  :req_categoria.valorfinpesos := :req_categoria.valor_fin * :control.salmin;&amp;#10;	 End If;&amp;#10;end If;&amp;#10;/*If :req_categoria.valor_fin is not null then&amp;#10;	valida_rango(:req_categoria.valor_ini,valido);&amp;#10;	If valido = 'N' then&amp;#10;		messagebox('Valor fuera del rango definido para la categoría de presupuesto');&amp;#10;		raise form_trigger_failure;&amp;#10;	end If;&amp;#10;End If;*/&amp;#10;End;&amp;#10;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="USR" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" Prompt="" ColumnName=""/>
+         <Item Name="FEC_PROC" DirtyInfo="true" Height="14" Visible="false" MaximumLength="30" Width="14" ItemType="Casilla de Control" Required="true" DataType="Datetime" Prompt="" ColumnName="" FormatMask="DD-MM-YYYY HH24:MI:SS"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="2" DSCPrecision="0" DSCName="C_EMP" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_CAT" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="TIPO_CONT" DSCScale="0" DSCMandatory="true"/>
+         <DataSourceColumn Type="Query" DSCType="NUMBER" DSCNochildren="false" DSCLength="0" DSCPrecision="5" DSCName="PLAZO" DSCScale="0" DSCMandatory="false"/>
+         <DataSourceColumn Type="Query" DSCType="VARCHAR2" DSCNochildren="false" DSCLength="10" DSCPrecision="0" DSCName="COD_GREQ" DSCScale="0" DSCMandatory="true"/>
+         <Trigger Name="POST-QUERY" TriggerText="begin&amp;#10; If :req_categoria.cod_cat is not null then&amp;#10; 	begin&amp;#10;	  select 		descripcion&amp;#10;	  into 			:control.desc_cat&amp;#10;	  from 			categoria_ppto&amp;#10;	  where 		c_emp=:global.empresa	and ano = :control.ano and cod_cat = :req_categoria.cod_cat;&amp;#10; 	  exception when no_data_found then&amp;#10;				 			:control.desc_cat := 'Sin descripcion para el año'||:control.ano;&amp;#10;							when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano;&amp;#10; 	End;&amp;#10; End If;&amp;#10; If :req_categoria.tipo_cont is not null then&amp;#10;   begin&amp;#10; 	  Select descripcion&amp;#10; 	  into :control.desc_control&amp;#10; 	  from tipo_control&amp;#10; 	  where c_emp = :global.empresa and tipo_cont = :req_categoria.tipo_cont and tipo_proc = :req_categoria.tipo_proc;&amp;#10;   	exception when no_data_found then&amp;#10;   					:control.desc_control := 'Sin descripcion para el año'||:control.ano;&amp;#10; 						 when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano; 	  &amp;#10;   End;&amp;#10; End If;&amp;#10; If :req_categoria.valor_ini is not null then&amp;#10; 	  :req_categoria.valorinipesos := :req_categoria.valor_ini * :control.salmin;&amp;#10; End If;&amp;#10; If :req_categoria.valor_fin is not null then&amp;#10; 	  :req_categoria.valorfinpesos := :req_categoria.valor_fin * :control.salmin;&amp;#10; End If; &amp;#10;End;" DirtyInfo="true"/>
+         <Trigger Name="KEY-DOWN" TriggerText="begin&amp;#10;down;&amp;#10; If :req_categoria.cod_cat is not null then&amp;#10; begin &amp;#10;	  select descripcion&amp;#10;	  into :control.desc_cat&amp;#10;	  from categoria_ppto&amp;#10;	  where c_emp=:global.empresa&amp;#10;	    and ano = :control.ano&amp;#10;	    and cod_cat = :req_categoria.cod_cat;&amp;#10; exception when no_data_found then&amp;#10;	:control.desc_cat := 'Sin descripcion para el año'||:control.ano;&amp;#10;							when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano;&amp;#10;  end;&amp;#10; End If;&amp;#10; If :req_categoria.tipo_cont is not null then&amp;#10;   begin&amp;#10; 	  Select descripcion&amp;#10; 	  into :control.desc_control&amp;#10; 	  from tipo_control&amp;#10; 	  where c_emp = :global.empresa&amp;#10; 	    and tipo_cont = :req_categoria.tipo_cont&amp;#10; 	    and tipo_proc = :req_categoria.tipo_proc;&amp;#10;   exception when no_data_found then&amp;#10; 					:control.desc_control := 'Sin descripcion para el año'||:control.ano;&amp;#10; 						 when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano;  	  &amp;#10;   end;&amp;#10; End If;&amp;#10;End;" DirtyInfo="true"/>
+         <Trigger Name="KEY-UP" TriggerText="begin&amp;#10; up;&amp;#10; If :req_categoria.cod_cat is not null then&amp;#10; begin&amp;#10;	  select descripcion&amp;#10;	  into :control.desc_cat&amp;#10;	  from categoria_ppto&amp;#10;	  where c_emp=:global.empresa&amp;#10;	    and ano = :control.ano&amp;#10;	    and cod_cat = :req_categoria.cod_cat;&amp;#10; exception when no_data_found then&amp;#10;	:control.desc_cat := 'Sin descripcion para el año'||:control.ano;&amp;#10;							when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano;&amp;#10;  end;&amp;#10; End If;&amp;#10; If :req_categoria.tipo_cont is not null then&amp;#10;   begin&amp;#10; 	  Select descripcion&amp;#10; 	  into :control.desc_control&amp;#10; 	  from tipo_control&amp;#10; 	  where c_emp = :global.empresa&amp;#10; 	    and tipo_cont = :req_categoria.tipo_cont&amp;#10; 	    and tipo_proc = :req_categoria.tipo_proc;&amp;#10;   exception when no_data_found then&amp;#10; 					:control.desc_control := 'Sin descripcion para el año'||:control.ano;&amp;#10; 						 when too_many_rows then&amp;#10;							:control.desc_cat := 'Múltiples entradas del registro para el año'||:control.ano; 	  &amp;#10;   end;&amp;#10; End If;&amp;#10;End;" DirtyInfo="true"/>
+         <Trigger Name="PRE-INSERT" TriggerText=":req_categoria.c_emp := :global.empresa;&amp;#10;:req_categoria.USR := :global.USUARIO_SP6;&amp;#10;:req_categoria.FEC_PROC := SYSDATE;&amp;#10;" DirtyInfo="true"/>
+         <Trigger Name="PRE-UPDATE" TriggerText=":req_categoria.USR := :global.USUARIO_SP6;&amp;#10;:req_categoria.FEC_PROC := SYSDATE;&amp;#10; " DirtyInfo="true"/>
+      </Block>
+      <Block Name="CONTROL" DirtyInfo="true" ScrollbarWidth="13" ScrollbarLength="144" DatabaseBlock="false">
+         <Item Name="ANO" DirtyInfo="true" Height="14" DatabaseItem="false" Width="66"/>
+         <Item Name="SALMIN" DirtyInfo="true" Height="14" DatabaseItem="false" Width="66" DataType="Number" Enabled="false"/>
+         <Item Name="DESC_CONTROL" DirtyInfo="true" Height="14" Justification="Principio" XPosition="283" LovName="LISTCONTROL" DatabaseItem="false" Width="253" PromptVisualAttributeName="DEFAULT" VisualAttributeName="NORMAL" YPosition="275" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="50" ItemType="Área del Usuario" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="DESC_CAT" DirtyInfo="true" Height="14" Justification="Principio" XPosition="25" LovName="LISTCAT" DatabaseItem="false" Width="252" PromptVisualAttributeName="DEFAULT" VisualAttributeName="NORMAL" YPosition="275" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="50" ItemType="Área del Usuario" CanvasName="PRINCIPAL" Enabled="false"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="PRINCIPAL" ViewportHeight="198" ViewportXPosition="10" WindowName="WINDOW0" Height="500" DirtyInfo="true" Bevel="Hundido" ViewportYPosition="55" Width="800" ViewportWidth="439" CanvasType="Contenido" VisualAttributeName="DEFAULT" BackColor="gray20" ShowHorizontalScrollbar="false" ShowVerticalScrollbar="false">
+         <Graphics Name="GRAPHIC363" GraphicsText="TIPO CONTROL POR RANGOS DENTRO DE CATEGORIAS" VerticalOrigin="Superior" InternalLineWidth="227" Height="19" VerticalMargin="14" GraphicsFontColor="white" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="431" InternalRotationAngle="0" HorizontalJustification="Centro" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="1" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="black" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="64" Bevel="Sin Relieve" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="16" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="black" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT20">
+               <TextSegment Name="TEXTSTR21" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="TIPO CONTROL POR RANGOS DENTRO DE CATEGORIAS" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT368" GraphicsText="" Height="240" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="564" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="13" CornerRadiusY="10" DirtyInfo="true" XPosition="1" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="solid" YPosition="61" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="yellow" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT19" GraphicsText="TIPO CONTROL POR RANGOS DENTRO DE CATEGORIAS" VerticalOrigin="Superior" InternalLineWidth="227" Height="19" VerticalMargin="14" GraphicsFontColor="darkblue" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="431" InternalRotationAngle="0" HorizontalJustification="Centro" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="79" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="black" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="65" Bevel="Sin Relieve" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="17" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="black" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT20">
+               <TextSegment Name="TEXTSTR21" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="TIPO CONTROL POR RANGOS DENTRO DE CATEGORIAS" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT358" GraphicsText="Valor en Pesos" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r25g0b75" Width="63" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="5" FillPattern="none" GraphicsFontColorCode="21" HorizontalObjectOffset="9" EdgeBackColor="white" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="480" GraphicsFontStyle="3" ScrollbarWidth="9" HorizontalMargin="5" BoundingBoxScalable="false" EdgePattern="none" YPosition="84" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT359">
+               <TextSegment Name="TEXTSTR360" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Subrayado" Text="Valor en Pesos" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT361" GraphicsText="Valor en Salarios Mínimos" Height="12" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r25g0b75" Width="111" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="5" FillPattern="none" GraphicsFontColorCode="21" HorizontalObjectOffset="9" EdgeBackColor="white" WrapText="false" DirtyInfo="true" Bevel="Ninguno" XPosition="307" GraphicsFontStyle="3" ScrollbarWidth="9" HorizontalMargin="5" BoundingBoxScalable="false" EdgePattern="none" YPosition="84" GraphicsType="Texto" GraphicsFontName="Arial" HorizontalOrigin="Derecha" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT359">
+               <TextSegment Name="TEXTSTR360" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Subrayado" Text="Valor en Salarios Mínimos" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT364" GraphicsText="" Height="177" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="165" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="13" CornerRadiusY="10" DirtyInfo="true" XPosition="174" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="solid" YPosition="79" GraphicsType="Rectángulo Redondeado" BackColor="gray" EdgeForegroundColor="gray" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="GRAPHIC366" GraphicsText="" Height="176" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="169" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="13" CornerRadiusY="10" DirtyInfo="true" XPosition="3" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="solid" YPosition="79" GraphicsType="Rectángulo Redondeado" BackColor="gray" EdgeForegroundColor="gray" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="GRAPHIC367" GraphicsText="" Height="177" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="222" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="13" CornerRadiusY="10" DirtyInfo="true" XPosition="341" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="solid" YPosition="79" GraphicsType="Rectángulo Redondeado" BackColor="gray" EdgeForegroundColor="gray" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT370" GraphicsText="Nombre de la categoría" Height="10" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r25g0b75" Width="75" HorizontalJustification="Principio" GraphicsFontWeight="Negrita" GraphicsFontSize="800" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="21" HorizontalObjectOffset="13" DirtyInfo="true" Bevel="Ninguno" XPosition="75" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="none" YPosition="262" GraphicsType="Texto" BackColor="white" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT371">
+               <TextSegment Name="TEXTSTR372" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Nombre de la categoría" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT373" GraphicsText="Nombre del Control" Height="10" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="r25g0b75" ForegroundColor="darkcyan" Width="64" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="21" HorizontalObjectOffset="13" DirtyInfo="true" Bevel="Ninguno" XPosition="345" GraphicsFontStyle="0" ScrollbarWidth="13" HorizontalMargin="7" EdgePattern="none" YPosition="263" GraphicsType="Texto" BackColor="white" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT374">
+               <TextSegment Name="TEXTSTR375" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Nombre del Control" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+      </Canvas>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <LOV Name="LISTCONTROL" ParentType="29" RecordGroupName="LISTCONTROL" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR005" AutoPosition="true" Title="Tipos de Control" ParentModuleType="12">
+         <LOVColumnMapping Name="TIPO_CONT" DirtyInfo="true" ReturnItem="REQ_CATEGORIA.TIPO_CONT" DisplayWidth="50" Title="Tipo control"/>
+         <LOVColumnMapping Name="TIPO_PROC" DirtyInfo="true" ReturnItem="REQ_CATEGORIA.TIPO_PROC" DisplayWidth="9" Title="Tipo_Proc"/>
+         <LOVColumnMapping Name="DESCRIPCION" DirtyInfo="true" ReturnItem="CONTROL.DESC_CONTROL" DisplayWidth="230" Title="Descripcion"/>
+      </LOV>
+      <LOV Name="LISTCAT" ParentType="29" RecordGroupName="LISTCAT" DirtyInfo="true" ParentName="LISTA" ParentModule="CONTR005" AutoPosition="true" Title="Categorías" ParentModuleType="12">
+         <LOVColumnMapping Name="COD_CAT" DirtyInfo="true" ReturnItem="REQ_CATEGORIA.COD_CAT" DisplayWidth="50" Title="Categoría"/>
+         <LOVColumnMapping Name="DESCRIPCION" DirtyInfo="true" ReturnItem="CONTROL.DESC_CAT" DisplayWidth="230" Title="Descripcion"/>
+      </LOV>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE inicio IS&amp;#10;BEGIN&amp;#10;  Execute_Trigger('INIT');  &amp;#10;  select to_char(sysdate,'YYYY') into :control.ano&amp;#10;  from dual;&amp;#10;  begin&amp;#10;		Select 	sal_min Into :control.salmin&amp;#10;		From 		var&amp;#10;		Where 	c_emp = :Global.empresa and ano = :control.ano;&amp;#10;  Exception &amp;#10;  	When No_Data_Found Then  :control.salmin := 1;&amp;#10;  	messagebox('no se encontró definido el salario mínimo para el año '||:control.ano);&amp;#10;  End;&amp;#10;  buscar; &amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN&amp;#10;	GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;  Create_record;&amp;#10;END;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 1;&amp;#10;  If (:System.form_status = 'CHANGED' or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form(no_validate);&amp;#10;    Inicio;&amp;#10;  End If;&amp;#10;END;"/>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;BEGIN&amp;#10;	GO_BLOCK(:TOOLBAR.NOMBRE_BLOQUE);	    &amp;#10;  Delete_record;&amp;#10;END;"/>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;Begin&amp;#10;  Commit;&amp;#10;End;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;   go_block('req_categoria');&amp;#10;   Execute_Query(All_Records);&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="VALIDA_RANGO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE valida_rango (valor in number,&amp;#10;                        valido in out varchar2) IS&amp;#10;valorini number;&amp;#10;valorfin number;&amp;#10;BEGIN&amp;#10;/* Valida que el rango suministrado esté dentro de la categoria, Menor = M   Mayor = Y */&amp;#10;	begin&amp;#10;    select valor_ppto_ini, valor_ppto_fin&amp;#10;      into valorini, valorfin&amp;#10;      from categoria_ppto&amp;#10;     where c_emp = :global.empresa&amp;#10;       and ano   = to_char(sysdate,'YYYY')&amp;#10;       and cod_cat = :req_categoria.cod_cat;&amp;#10;	  exception when no_data_found then&amp;#10;		 begin&amp;#10;			valorini := 0;&amp;#10;			valorfin := 0;&amp;#10;		 end;	&amp;#10;  end;&amp;#10;  Valido := 'N';&amp;#10;  If valor between valorini and valorfin then&amp;#10;  	valido := 'S';&amp;#10;  end if;  &amp;#10;END;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <RecordGroup Name="LISTCONTROL" DirtyInfo="true" RecordGroupQuery="SELECT TIPO_CONT,TIPO_PROC,DESCRIPCION&amp;#10;FROM TIPO_CONTROL">
+         <RecordGroupColumn Name="TIPO_CONT" DirtyInfo="true" MaximumLength="10" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="TIPO_PROC" DirtyInfo="true" MaximumLength="1" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="DESCRIPCION" DirtyInfo="true" MaximumLength="50" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="LISTCAT" DirtyInfo="true" RecordGroupQuery="SELECT COD_CAT,DESCRIPCION&amp;#10;FROM CATEGORIA_PPTO&amp;#10;WHERE C_EMP = :GLOBAL.EMPRESA&amp;#10;AND ANO = TO_CHAR(SYSDATE,'YYYY')">
+         <RecordGroupColumn Name="COD_CAT" DirtyInfo="true" MaximumLength="10" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="DESCRIPCION" DirtyInfo="true" MaximumLength="50" ColumnDataType="Character"/>
+      </RecordGroup>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="CURR_RECORD" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA1" FontSize="900" BackColor="gray36" DirtyInfo="true" FontName="Century Gothic" ForegroundColor="white" FontStyle="Normal"/>
+      <Window Name="WINDOW0" MinimizeAllowed="true" Height="500" DirtyInfo="true" Bevel="Resaltado" HideOnExit="false" Width="800" InheritMenu="true" Title="Requerimientos por Categoría" VisualAttributeName="DEFAULT" ClearAllowed="true" ShowHorizontalScrollbar="false" MaximizeAllowed="true" MinimizeTitle="Clases de Comprobantes" WindowStyle="Documento" ShowVerticalScrollbar="false" ResizeAllowed="true" MoveAllowed="true" IconFilename="Contab"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>

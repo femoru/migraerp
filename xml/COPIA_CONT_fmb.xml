@@ -1,0 +1,406 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="COPIA_CONT" ConsoleWindow="WINDOW0" RecordVisualAttributeGroupName="" DirtyInfo="true" RuntimeComp="4.5" MenuModule="MPPAL" CursorMode="Abrir" MenuRole="" Title="FORMA DE CONTRATOS" InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="5" CoordinateSystem="Real" CharacterCellHeight="14" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="COPIA" DirtyInfo="true" QueryDataSourceType="Ninguno" ScrollbarWidth="14" DMLDataType="Ninguno" ScrollbarLength="135" DatabaseBlock="false">
+         <Item Name="NUM_CONT" Height="14" DirtyInfo="true" XPosition="24" LovName="CONTRATOS" Width="97" DatabaseItem="false" ValidateFromList="true" VisualAttributeName="NORMAL" YPosition="58" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" TabPageName="" CanvasName="PRINCIPAL">
+            <Trigger Name="POST-CHANGE" TriggerText=":copia.c_tip := :copia.c_tip_v;&amp;#10;:copia.NOM_min := :copia.NOM_min_v;&amp;#10; :copia.VALOR_CONT  := :copia.VALOR_CONT_V;&amp;#10;:copia.NOM_TIP_CONT := :copia.NOM_TIP_CONT_V; &amp;#10;:copia.NOMBRE_MINUTA:=  :copia.NOMBRE_MINUTA_V; &amp;#10; :copia.VLR_HORA :=  :copia.VLR_HORA_V; &amp;#10; :copia.c_cos:=  :copia.c_cos_V;&amp;#10; :copia.act_basica:=:copia.act_basica_v; " DirtyInfo="true"/>
+         </Item>
+         <Item Name="F_CREA_CONT" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" DatabaseItem="false" Width="59" PromptVisualAttributeName="ETIQUETA" DataType="Date" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" FormatMask="DD/MM/YYYY"/>
+         <Item Name="F_FIRMA" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="209" PromptJustification="Centro" DatabaseItem="false" Width="62" PromptVisualAttributeName="ETIQUETA" DataType="Date" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt="Fecha.Firma" FormatMask="DD/MM/YYYY"/>
+         <Item Name="F_INI" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="277" PromptJustification="Centro" DatabaseItem="false" Width="60" PromptVisualAttributeName="ETIQUETA" DataType="Date" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" Prompt="Fecha Inicio" FormatMask="DD/MM/YYYY"/>
+         <Item Name="F_VEN" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="346" PromptJustification="Centro" DatabaseItem="false" Width="55" PromptVisualAttributeName="ETIQUETA" DataType="Date" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" Prompt="Fecha Vcto" FormatMask="DD/MM/YYYY">
+            <Trigger Name="POST-CHANGE" TriggerText="	If   :copia.f_ven is not null Then&amp;#10;		:copia.fecha_liq := add_months(:copia.f_ven,2);&amp;#10;	End if;&amp;#10;	IF :copia.f_ini IS NOT NULL AND :copia.f_VEN IS NOT NULL THEN&amp;#10;	 :copia.Dias_PLAZO := :copia.f_ven - :copia.f_ini+1;&amp;#10;	END IF; " DirtyInfo="true"/>
+         </Item>
+         <Item Name="FECHA_LIQ" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="408" PromptJustification="Centro" DatabaseItem="false" Width="55" PromptVisualAttributeName="ETIQUETA" DataType="Date" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" Prompt="Fecha Liq." FormatMask="DD/MM/YYYY"/>
+         <Item Name="VALOR_CONT" DirtyInfo="true" Height="14" Justification="Derecha" PromptAlign="Centro" XPosition="469" PromptJustification="Centro" DatabaseItem="false" Width="133" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="191" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" Prompt="Monto Contrato" FormatMask="999g999g999g999d99"/>
+         <Item Name="C_TIP" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" LovName="TIPO" DatabaseItem="false" Width="36" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="215" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_MIN" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" LovName="TIP_MIN" DatabaseItem="false" Width="88" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" YPosition="239" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="50" PromptAttachmentEdge="Arriba" ItemType="Área del Usuario" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="PROVEEDOR" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" LovName="CONTRATISTAS" DatabaseItem="false" Width="87" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" YPosition="262" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="20" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL">
+            <Trigger Name="POST-CHANGE" TriggerText="begin&amp;#10;		select E.N_CXP, E.TIPO, t.nom &amp;#10;		  into :COPIA.N_CXP, :copia.COD_CXP, :copia.nom_tipo &amp;#10;		   from cxp_enc E, tipo_cxp t&amp;#10;		   where E.c_emp = :global.empresa&amp;#10;		    	and E.n_ide = :Copia.Proveedor&amp;#10;		    	and e.c_emp = t.c_emp&amp;#10;		    	and e.tipo  = t.c_tip ;&amp;#10;		       exception &amp;#10;		  	    when no_data_found then&amp;#10;                 messagebox('El contratista '||:Copia.Proveedor||' no tiene cuenta en proveedores Verifique');	&amp;#10;                 Raise form_trigger_failure;		        	         &amp;#10;            when too_many_rows then&amp;#10;                 :COPIA.N_CXP := null;&amp;#10;                 :copia.COD_CXP:= null;&amp;#10;                  :copia.nom_tipo := null;&amp;#10;                 &amp;#10;end;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="N_CXP" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" LovName="N_CXP" DatabaseItem="false" Width="36" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="289" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="6" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL">
+            <Trigger Name="POST-CHANGE" TriggerText="begin&amp;#10;		select  E.TIPO, t.nom &amp;#10;		  into  :copia.COD_CXP, :copia.nom_tipo &amp;#10;		   from cxp_enc E, tipo_cxp t&amp;#10;		   where E.c_emp = :global.empresa&amp;#10;		    	and E.n_ide = :Copia.Proveedor&amp;#10;		    	and e.n_cxp = :copia.n_cxp &amp;#10;		    	and e.c_emp = t.c_emp&amp;#10;		    	and e.tipo  = t.c_tip ;&amp;#10;		       exception &amp;#10;		  	    when no_data_found then&amp;#10;                 messagebox('El contratista '||:Copia.Proveedor||' no tiene esa cuenta '||:copia.n_cxp);	&amp;#10;                 Raise form_trigger_failure;		        	         &amp;#10;end;" DirtyInfo="true"/>
+         </Item>
+         <Item Name="C_COS" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="144" PromptJustification="Centro" LovName="" DatabaseItem="false" Width="71" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="316" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="12" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt="Centro.Costo"/>
+         <Item Name="INTERVENTOR" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="233" PromptJustification="Centro" PromptFontName="Arial" PromptFontSpacing="Normal" PromptFontSize="800" LovName="" DatabaseItem="false" Width="71" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="315" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="20" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt="Interventor" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="ANO_PLAZO" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="334" PromptJustification="Centro" PromptFontName="Arial" PromptFontSpacing="Normal" PromptFontSize="800" LovName="" DatabaseItem="false" Width="36" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="316" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="4" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt=" Años" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="MES_PLAZO" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="384" PromptJustification="Centro" LovName="" DatabaseItem="false" Width="32" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="316" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt="Mes"/>
+         <Item Name="DIAS_PLAZO" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="424" PromptJustification="Centro" LovName="" DatabaseItem="false" Width="28" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="316" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="3" PromptAttachmentEdge="Arriba" CanvasName="PRINCIPAL" Prompt="Dias"/>
+         <Item Name="VLR_HORA" DirtyInfo="true" Height="14" Justification="Derecha" PromptAlign="Centro" XPosition="471" PromptJustification="Centro" DatabaseItem="false" Width="133" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="316" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="PRINCIPAL" Prompt="Valor Hora" FormatMask="999g999g999g999d99"/>
+         <Item Name="VLR_HORA_V" DirtyInfo="true" PromptAlign="Centro" Height="14" Justification="Derecha" XPosition="264" PromptJustification="Centro" DatabaseItem="false" Width="133" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="345" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="" Prompt="Valor Hora" FormatMask="999g999g999g999d99"/>
+         <Item Name="C_COS_V" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="146" PromptJustification="Centro" LovName="TIPO" DatabaseItem="false" Width="71" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="306" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="12" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="" Prompt="Centro.Costo"/>
+         <Item Name="ANO_PLAZO_V" Height="14" PromptAlign="Centro" PromptFontName="Arial" Width="36" PromptVisualAttributeName="ETIQUETA" MaximumLength="4" ItemType="Casilla de Control" Prompt=" Años" DirtyInfo="true" XPosition="338" PromptJustification="Centro" PromptFontSize="800" PromptFontSpacing="Normal" LovName="" DatabaseItem="false" ValidateFromList="true" DataType="Number" VisualAttributeName="NORMAL" YPosition="298" RecordVisualAttributeGroupName="CURR_RECORD" PromptAttachmentEdge="Arriba" TabPageName="" CanvasName="" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="MES_PLAZO_V" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="388" PromptJustification="Centro" LovName="" DatabaseItem="false" Width="32" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="298" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="" Prompt="Mes"/>
+         <Item Name="DIAS_PLAZO_V" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="428" PromptJustification="Centro" LovName="" DatabaseItem="false" Width="28" ValidateFromList="true" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="298" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="3" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="" Prompt="Dias"/>
+         <Item Name="N_CONT_NEW" DirtyInfo="true" Height="14" XPosition="14" LovName="CONTRATOS" Width="102" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="206" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="C_TIP_V" DirtyInfo="true" Height="14" XPosition="156" LovName="TIPO" Width="36" DatabaseItem="false" DataType="Char" VisualAttributeName="NORMAL" YPosition="63" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" ItemType="Casilla de Control" CanvasName="PRINCIPAL"/>
+         <Item Name="VALOR_CONT_V" DirtyInfo="true" Height="14" Justification="Derecha" XPosition="477" DatabaseItem="false" Width="126" DataType="Number" YPosition="39" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL" FormatMask="999g999g999g999d99"/>
+         <Item Name="IVA_INCLUIDO_V" DirtyInfo="true" Height="14" Justification="Derecha" XPosition="477" DatabaseItem="false" Width="126" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="39" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="1" ItemType="Casilla de Control" TabPageName="" CanvasName="" FormatMask=""/>
+         <Item Name="PORC_IVA_V" DirtyInfo="true" Height="14" Justification="Derecha" XPosition="477" DatabaseItem="false" Width="126" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="39" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" ItemType="Casilla de Control" TabPageName="" CanvasName="" FormatMask="999g999g999g999d99"/>
+         <Item Name="VLR_IVA_V" DirtyInfo="true" Height="14" Justification="Derecha" XPosition="477" DatabaseItem="false" Width="126" PromptVisualAttributeName="ETIQUETA" DataType="Number" YPosition="39" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="16" ItemType="Casilla de Control" TabPageName="" CanvasName="" FormatMask="999g999g999g999d99"/>
+         <Item Name="F_INI_V" DirtyInfo="true" Height="14" XPosition="320" DatabaseItem="false" Width="68" DataType="Date" VisualAttributeName="NORMAL" YPosition="39" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL" FormatMask="DD/MM/YYYY"/>
+         <Item Name="F_FIRMA_V" DirtyInfo="true" Height="14" XPosition="238" Width="68" DatabaseItem="false" DataType="Date" VisualAttributeName="NORMAL" YPosition="39" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" ItemType="Casilla de Control" CanvasName="PRINCIPAL" FormatMask="DD/MM/YYYY"/>
+         <Item Name="F_VEN_V" DirtyInfo="true" Height="14" XPosition="399" DatabaseItem="false" Width="68" DataType="Date" VisualAttributeName="NORMAL" YPosition="39" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL" FormatMask="DD/MM/YYYY"/>
+         <Item Name="PROVEEDOR_V" DirtyInfo="true" Height="14" XPosition="157" LovName="CONTRATISTAS" Width="96" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="111" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="20" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="F_CREA_CONT_V" DirtyInfo="true" Height="14" XPosition="157" DatabaseItem="false" Width="68" DataType="Date" VisualAttributeName="NORMAL" YPosition="39" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="10" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL" FormatMask="DD/MM/YYYY"/>
+         <Item Name="N_CXP_V" DirtyInfo="true" Height="14" XPosition="155" LovName="N_CXP" DatabaseItem="false" Width="36" DataType="Number" VisualAttributeName="NORMAL" YPosition="137" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="6" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_PROV" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="240" PromptJustification="Centro" LovName="CONTRATISTAS" DatabaseItem="false" Width="363" PromptVisualAttributeName="ETIQUETA" YPosition="262" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="60" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_PROV_V" DirtyInfo="true" Height="14" XPosition="258" LovName="CONTRATISTAS" Width="347" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="112" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="60" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="COD_CXP" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="195" PromptJustification="Centro" LovName="N_CXP" DatabaseItem="false" Width="35" PromptVisualAttributeName="ETIQUETA" YPosition="289" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="COD_CXP_V" DirtyInfo="true" Height="14" XPosition="198" LovName="N_CXP" Width="35" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="137" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="2" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOMBRE_MINUTA" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="241" PromptJustification="Centro" LovName="TIP_MIN" DatabaseItem="false" Width="360" PromptVisualAttributeName="ETIQUETA" YPosition="239" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="70" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_MIN_V" DirtyInfo="true" Height="14" XPosition="156" LovName="TIP_MIN" Width="94" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="87" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="50" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOMBRE_MINUTA_V" DirtyInfo="true" Height="14" XPosition="259" LovName="TIP_MIN" Width="346" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="87" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="70" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_TIPO" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="234" PromptJustification="Centro" LovName="N_CXP" DatabaseItem="false" Width="368" PromptVisualAttributeName="ETIQUETA" DataType="Char" YPosition="289" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="60" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_TIPO_V" DirtyInfo="true" Height="14" XPosition="238" LovName="N_CXP" Width="368" DatabaseItem="false" DataType="Char" VisualAttributeName="NORMAL" YPosition="137" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="60" ItemType="Casilla de Control" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_TIP_CONT" DirtyInfo="true" Height="14" PromptAlign="Centro" XPosition="191" PromptJustification="Centro" LovName="TIPO" DatabaseItem="false" Width="411" PromptVisualAttributeName="ETIQUETA" YPosition="215" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="40" PromptAttachmentEdge="Arriba" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="NOM_TIP_CONT_V" DirtyInfo="true" Height="14" XPosition="200" LovName="TIPO" Width="403" DatabaseItem="false" VisualAttributeName="NORMAL" YPosition="63" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="40" ItemType="Casilla de Control" TabPageName="" CanvasName="PRINCIPAL"/>
+         <Item Name="REALIZAR" FontSize="800" DirtyInfo="true" Height="16" XPosition="521" FontName="Arial" ForegroundColor="darkcyan" Width="89" YPosition="362" FontSpacing="Normal" Label="Realizar Copia" BackColor="custom7" FontWeight="Negrita" FontStyle="Normal" ItemType="Botón" CanvasName="PRINCIPAL">
+            <Trigger Name="WHEN-BUTTON-PRESSED" TriggerText="DECLARE&amp;#10;	 &amp;#10;   cerr      number;&amp;#10;   merr      varchar2(1000);&amp;#10;   cont_new  cont_cxp.n_cont%type; &amp;#10;   &amp;#10;BEGIN&amp;#10;	    	If :Copia.Proveedor Is Null Then &amp;#10;    	    MESSAGEBOX('Digite el contratista ' );	&amp;#10;          Raise FORM_TRIGGER_FAILURE   ;&amp;#10;    	End If;    	&amp;#10;    	If :Copia.N_Cxp is Null Then &amp;#10;    		  MESSAGEBOX('Digite la cuenta del contratista  ') ;	&amp;#10;          Raise FORM_TRIGGER_FAILURE       ;&amp;#10;    	End If; &amp;#10;    	 begin&amp;#10;		    	 select n_ide&amp;#10;		    	   into :Copia.Proveedor &amp;#10;		    	   from cxp_enc&amp;#10;		    	   where c_emp =  :GLOBAL.EMPRESA &amp;#10;		    	     and n_ide =  :Copia.Proveedor &amp;#10;		    	     and n_cxp =  :Copia.N_Cxp;&amp;#10;		       exception &amp;#10;		  	    when no_data_found then&amp;#10;                MESSAGEBOX('La cuenta '||:Copia.N_Cxp||' no corresponde al contratista '||:Copia.Proveedor||' VERIFIQUE');	&amp;#10;                 Raise FORM_TRIGGER_FAILURE      ;		        	         &amp;#10;		       end;&amp;#10; &amp;#10;   	  CTR_Copia_Contrato(:GLOBAL.EMPRESA,  :COPIA.NUM_CONT,   cont_new, :COPIA.PROVEEDOR, :COPIA.N_CXP, &amp;#10;   	                     :COPIA.VALOR_CONT, :COPIA.F_Crea_Cont, :COPIA.F_Firma,&amp;#10;   	                     :COPIA.F_INI, :COPIA.F_VEN, :COPIA.FECHA_LIQ,  &amp;#10;   	                     :COPIA.ANO_PLAZO, :COPIA.MES_PLAZO , :COPIA.DIAS_PLAZO,&amp;#10;   	                     :COPIA.C_Tip, :COPIA.Nom_Min,:COPIA.VLR_HORA, :COPIA.C_COS,&amp;#10;   	                     :copia.interventor ,:COPIA.ACT_BASICA,:COPIA.TIPO, :GLOBAL.USUARIO_SP6, cerr, merr); 	&amp;#10; 	if cerr &lt;> 0 then&amp;#10; 		  messagebox(merr);&amp;#10; 		  raise form_trigger_failure;&amp;#10; 	ELSE   &amp;#10;  	MESSAGEBOX('Contrato Nuevo '||cont_new);&amp;#10;    Commit_Form;&amp;#10;    Clear_Form(No_Validate);&amp;#10;  End If; &amp;#10;END; " DirtyInfo="true"/>
+         </Item>
+         <Item Name="ACT_BASICA_V" DirtyInfo="true" Height="14" XPosition="237" PromptFontName="Arial" PromptFontSpacing="Normal" PromptFontSize="800" LovName="N_CXP" DatabaseItem="false" Width="368" PromptAlignOffset="2" DataType="Char" YPosition="155" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="500" PromptAttachmentOffset="7" ItemType="Casilla de Control" PromptForegroundColor="darkblue" CanvasName="PRINCIPAL" Prompt="Actividad Principal" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="ACT_BASICA" DirtyInfo="true" Height="14" XPosition="233" PromptFontName="Arial" PromptFontSpacing="Normal" PromptFontSize="800" LovName="N_CXP" DatabaseItem="false" Width="370" PromptAlignOffset="1" DataType="Char" YPosition="334" VisualAttributeName="NORMAL" RecordVisualAttributeGroupName="CURR_RECORD" MaximumLength="500" PromptAttachmentOffset="13" ItemType="Área del Usuario" PromptForegroundColor="darkblue" CanvasName="PRINCIPAL" Prompt="Actividad Principal" PromptFontStyle="Normal" PromptFontWeight="Negrita"/>
+         <Item Name="TIPO" DirtyInfo="true" Height="16" MaximumLength="1" DatabaseItem="false" Width="75"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="PRINCIPAL" ViewportHeight="325" ViewportXPosition="0" WindowName="WINDOW0" Height="600" DirtyInfo="true" ViewportYPosition="0" Width="800" ViewportWidth="555" CanvasType="Contenido" RaiseOnEnter="true" BackColor="gray20" ViewportXPositionOnCanvas="0" ViewportYPositionOnCanvas="0">
+         <Graphics Name="ROUNDRECT213" GraphicsText="" Height="361" InternalLineWidth="1" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="darkcyan" Width="619" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="3" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="19" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="red" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT455" GraphicsText="Numero Contrato Original" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="105" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="21" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="45" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT456">
+               <TextSegment Name="TEXTSTR457" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Numero Contrato Original" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT458" GraphicsText="Datos Nuevo Contrato" Height="12" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="103" HorizontalJustification="Principio" GraphicsFontSize="1000" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="15" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="193" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT459">
+               <TextSegment Name="TEXTSTR460" FontSize="1000" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Datos Nuevo Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT467" GraphicsText="" Height="180" InternalLineWidth="1" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="darkcyan" Width="475" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="137" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="177" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="darkblue" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT468" GraphicsText="Fec Creacion" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="48" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="148" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="181" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Fec Creacion" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT544" GraphicsText="Fec Creacion" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="48" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="156" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="30" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Fec Creacion" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT545" GraphicsText="Fecha Inicio " Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="50" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="327" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="30" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Fecha Inicio " FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT546" GraphicsText="Fecha Vencto" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="56" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="403" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="30" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Fecha Vencto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT473" GraphicsText="Tipo Minuta" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="48" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="161" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="229" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT474">
+               <TextSegment Name="TEXTSTR475" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Tipo Minuta" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT555" GraphicsText="Tipo Minuta" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="48" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="183" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="78" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT474">
+               <TextSegment Name="TEXTSTR475" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Tipo Minuta" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT481" GraphicsText="Proveedor" Height="12" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="50" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="161" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="252" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT482">
+               <TextSegment Name="TEXTSTR483" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT556" GraphicsText="Proveedor" Height="12" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="50" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="183" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="101" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT482">
+               <TextSegment Name="TEXTSTR483" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT485" GraphicsText="Num Cuenta Por Pagar " Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="95" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="145" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="277" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT486">
+               <TextSegment Name="TEXTSTR487" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Num Cuenta Por Pagar " FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT557" GraphicsText="Num Cuenta Por Pagar " Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="95" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" Bevel="Ninguno" XPosition="154" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="custom7" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT486">
+               <TextSegment Name="TEXTSTR487" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Num Cuenta Por Pagar " FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="GRAPHIC494" GraphicsText="Tipo Contrato" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="56" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="163" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="205" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT474">
+               <TextSegment Name="TEXTSTR475" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Tipo Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT558" GraphicsText="Tipo Contrato" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="56" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="183" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="53" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT474">
+               <TextSegment Name="TEXTSTR475" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Tipo Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT495" GraphicsText="" Height="42" InternalLineWidth="1" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="darkcyan" Width="117" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="16" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="38" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="gray" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT518" GraphicsText="COPIA DE UN CONTRATO" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="white" ForegroundColor="darkcyan" Width="97" HorizontalJustification="Principio" GraphicsFontSize="1400" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="1" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="174" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="1" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT519">
+               <TextSegment Name="TEXTSTR520" FontSize="1400" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="COPIA DE UN CONTRATO" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT535" GraphicsText="COPIA DE UN CONTRATO" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="97" HorizontalJustification="Principio" GraphicsFontSize="1400" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="175" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="0" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT519">
+               <TextSegment Name="TEXTSTR520" FontSize="1400" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="COPIA DE UN CONTRATO" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT547" GraphicsText="Monto Contrato" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="65" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="525" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="30" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Monto Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT548" GraphicsText="Fecha Firma" Height="11" VerticalMargin="14" GraphicsFontSpacing="Normal" GraphicsFontColor="darkblue" ForegroundColor="darkcyan" Width="48" HorizontalJustification="Principio" GraphicsFontSize="800" GraphicsFontWeight="Negrita" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="79" HorizontalObjectOffset="14" DirtyInfo="true" XPosition="243" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="none" YPosition="30" GraphicsType="Texto" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="Arial" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT469">
+               <TextSegment Name="TEXTSTR470" FontSize="800" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Fecha Firma" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="ROUNDRECT559" GraphicsText="" Height="146" InternalLineWidth="1" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="darkcyan" Width="465" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="147" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="27" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="gray" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+         <Graphics Name="ROUNDRECT563" GraphicsText="" Height="47" InternalLineWidth="1" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" ForegroundColor="darkcyan" Width="115" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="none" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="10" DirtyInfo="true" XPosition="8" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="181" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="darkblue" GraphicsFontName="" CornerRadiusX="10" JoinStyle="Bisel"/>
+      </Canvas>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Editor Name="EDITOR" Height="200" XPosition="100" ShowVerticalScrollbar="false" Width="200" YPosition="100" VisualAttributeName="DEFAULT" Title="Editor de Texto"/>
+      <LOV Name="CONTRATOS" ParentType="29" RecordGroupName="CONTRATOS" DirtyInfo="true" ParentName="LISTA" ParentModule="COPIA_CONT" AutoPosition="true" Width="300" Title="Contratos " ParentModuleType="12">
+         <LOVColumnMapping Name="N_CONT" DirtyInfo="true" ReturnItem="COPIA.NUM_CONT" DisplayWidth="100" Title="N_Cont"/>
+         <LOVColumnMapping Name="N_IDE" DirtyInfo="true" ReturnItem="COPIA.PROVEEDOR_V" DisplayWidth="90" Title="N_Ide"/>
+         <LOVColumnMapping Name="NOMBRE" DirtyInfo="true" ReturnItem="COPIA.NOM_PROV_V" DisplayWidth="200" Title="Nombre"/>
+         <LOVColumnMapping Name="F_CREA_CONT" DirtyInfo="true" ReturnItem="COPIA.F_CREA_CONT_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="F_INI" DirtyInfo="true" ReturnItem="COPIA.F_INI_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="F_VEN" DirtyInfo="true" ReturnItem="COPIA.F_VEN_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="MONTO" DirtyInfo="true" ReturnItem="COPIA.VALOR_CONT_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="C_TIP" DirtyInfo="true" ReturnItem="COPIA.C_TIP_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="TIP_CONT" DirtyInfo="true" ReturnItem="COPIA.NOM_TIP_CONT_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="NOM_MIN" DirtyInfo="true" ReturnItem="COPIA.NOM_MIN_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="NOM_MINUTA" DirtyInfo="true" ReturnItem="COPIA.NOMBRE_MINUTA_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="N_CXP" DirtyInfo="true" ReturnItem="COPIA.N_CXP_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="TIPO" DirtyInfo="true" ReturnItem="COPIA.COD_CXP_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="NOM_TIPO_CXP" DirtyInfo="true" ReturnItem="COPIA.NOM_TIPO_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="IVA_INCLUIDO" DirtyInfo="true" ReturnItem="COPIA.IVA_INCLUIDO_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="PORC_IVA" DirtyInfo="true" ReturnItem="COPIA.PORC_IVA_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="C_COS" DirtyInfo="true" ReturnItem="COPIA.C_COS_V" DisplayWidth="68" Title=""/>
+         <LOVColumnMapping Name="ACT_BASICA" DirtyInfo="true" ReturnItem="COPIA.ACT_BASICA_V" DisplayWidth="100" Title=""/>
+         <LOVColumnMapping Name="TIPO_P" DirtyInfo="true" ReturnItem="COPIA.TIPO" DisplayWidth="68" Title=""/>
+      </LOV>
+      <LOV Name="TIPO" ParentType="29" RecordGroupName="TIPO" DirtyInfo="true" ParentName="LISTA" ParentModule="COPIA_CONT" Title="Tipos De Contratos" ParentModuleType="12">
+         <LOVColumnMapping Name="C_TIP" DirtyInfo="true" ReturnItem="COPIA.C_TIP" DisplayWidth="14" Title="Código"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="COPIA.NOM_TIP_CONT" DisplayWidth="185" Title="Nombre"/>
+      </LOV>
+      <LOV Name="CONTRATISTAS" ParentType="29" RecordGroupName="CONTRATISTAS" DirtyInfo="true" ParentName="LISTA" ParentModule="COPIA_CONT" Title="CONTRATISTAS" ParentModuleType="12">
+         <LOVColumnMapping Name="N_IDE" DirtyInfo="true" ReturnItem="COPIA.PROVEEDOR" DisplayWidth="90" Title="N_Ide"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="COPIA.NOM_PROV" DisplayWidth="185" Title="Nom"/>
+      </LOV>
+      <LOV Name="N_CXP" ParentType="29" RecordGroupName="N_CXP" DirtyInfo="true" ParentName="LISTA" ParentModule="COPIA_CONT" Title="Cuentas Por Pagar Del Proveedor" ParentModuleType="12">
+         <LOVColumnMapping Name="N_CXP" DirtyInfo="true" ReturnItem="COPIA.N_CXP" DisplayWidth="23" Title="Cuenta"/>
+         <LOVColumnMapping Name="TIPO" DirtyInfo="true" ReturnItem="COPIA.COD_CXP" DisplayWidth="14" Title="Tipo"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="COPIA.NOM_TIPO" DisplayWidth="275" Title="Nombre del tipo"/>
+      </LOV>
+      <LOV Name="TIP_MIN" ParentType="29" RecordGroupName="TIP_MIN" DirtyInfo="true" ParentName="LISTA" ParentModule="COPIA_CONT" AutoPosition="true" Title="Tipos de Minutas" ParentModuleType="12">
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="COPIA.NOM_MIN" DisplayWidth="30" Title="Nom"/>
+         <LOVColumnMapping Name="DES" DirtyInfo="true" ReturnItem="COPIA.NOMBRE_MINUTA" DisplayWidth="479" Title="Des"/>
+      </LOV>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10; NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;   GO_BLOCK('CONTROL');&amp;#10;   CLEAR_BLOCK(NO_VALIDATE);&amp;#10;   go_item('control.c_agr');&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE INICIO IS&amp;#10;Begin	&amp;#10;	:Global.Fechasel := null;&amp;#10;	:Global.monto := null;&amp;#10;  Execute_Trigger ('INIT');&amp;#10;  --Enable('Toolbar.Boton_Imprimir',1);&amp;#10;  Go_Item('Copia.Num_Cont');  	&amp;#10; 	&amp;#10;  :Copia.F_Crea_cont :=sysdate; &amp;#10;  &amp;#10; 	 &amp;#10;End;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 1;&amp;#10;--  messagebox(:system.form_status||' '||:system.block_status);&amp;#10;  If (:System.form_status = 'CHANGED' Or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form (No_Validate);&amp;#10;    --Set_item_property('cont_cxp.N_CONT',visible,property_False);&amp;#10; 	  --Set_item_property('cont_cxp.TIPO_CONT_MON',visible,property_True);&amp;#10; 	  --Set_item_property('cont_cxp.TIPO_CONT_MON',enabled,property_True);&amp;#10;    Inicio;&amp;#10;  End If;&amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <ProgramUnit Name="VALIDA_NCXP" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE valida_ncxp IS&amp;#10;BEGIN&amp;#10; 	If :Copia.n_cxp is null then&amp;#10;		messagebox('El contratista debe tener cuenta por pagar asociada. Verifique');&amp;#10;		raise Form_trigger_Failure;&amp;#10;	else&amp;#10;		next_item;&amp;#10;	end if;&amp;#10;&amp;#10;END;"/>
+      <ProgramUnit Name="CALCULA_FECHA" ProgramUnitText="Null;&amp;#10;/*PROCEDURE calcula_fecha IS&amp;#10;wfecha varchar2(8);&amp;#10;nfecha date;&amp;#10;Begin&amp;#10;  If :cont_cxp.f_ini is not null then&amp;#10;		If :cont_cxp.dias_plazo > 0 then&amp;#10;		  nfecha := :cont_cxp.f_ini + :cont_cxp.dias_plazo;		   		&amp;#10;			Begin&amp;#10;				Select to_char(nfecha,'YYYYMMDD')&amp;#10;				  Into wfecha&amp;#10;				  From Dual;&amp;#10;			End;&amp;#10;--			wfecha := :cont_cxp.f_ini + :cont_cxp.dias_plazo;&amp;#10;      :cont_cxp.f_ven := to_date(wfecha,'YYYYMMDD')-1;  &amp;#10;		End If;&amp;#10;		If :cont_cxp.mes_plazo > 0 then&amp;#10;			If :cont_cxp.dias_plazo > 0 then&amp;#10;				Begin&amp;#10;					Select to_char(add_months(:cont_cxp.f_ven,:cont_cxp.mes_plazo),'YYYYMMDD')&amp;#10;					  Into wfecha&amp;#10;					  From Dual;&amp;#10;				End;&amp;#10;      Else&amp;#10;				Begin&amp;#10;					Select to_char(add_months(:cont_cxp.f_ini,:cont_cxp.mes_plazo),'YYYYMMDD')&amp;#10;					  Into wfecha&amp;#10;					  From Dual;&amp;#10;				End;&amp;#10;      End If;&amp;#10;--			wfecha := add_months(:cont_cxp.f_ini,:cont_cxp.mes_plazo);&amp;#10;      :cont_cxp.f_ven := to_date(wfecha,'YYYYMMDD')-1;  &amp;#10;		End If;&amp;#10;    If :cont_cxp.ano_plazo > 0 then&amp;#10;      If :cont_cxp.mes_plazo > 0 or :cont_cxp.dias_plazo > 0 then&amp;#10;	     	Begin&amp;#10;	      	select to_char(to_number(to_char(:cont_cxp.f_ven,'YYYY')) + :cont_cxp.ano_plazo)||&amp;#10;	               to_char(:cont_cxp.f_ven,'mmdd') &amp;#10;	        Into wfecha&amp;#10;	        from dual;      	&amp;#10;	        Exception When Others then messagebox(sqlerrm);&amp;#10;	      End;&amp;#10;      Else&amp;#10;	    	Begin&amp;#10;	      	select to_char(to_number(to_char(:cont_cxp.f_ini,'YYYY')) + :cont_cxp.ano_plazo)||&amp;#10;	               to_char(:cont_cxp.f_ven,'mmdd') &amp;#10;	        Into wfecha&amp;#10;	        from dual;      	&amp;#10;	        Exception When Others then messagebox(sqlerrm);&amp;#10;	      End;&amp;#10;	    End If;&amp;#10;      :cont_cxp.f_ven := to_date(wfecha,'YYYYMMDD')-1;  &amp;#10;   	End If;&amp;#10;  End If;    &amp;#10;   :Cont_Cxp.Dias:=:cont_cxp.f_ven - :cont_cxp.f_ini+1; */&amp;#10;  /* If :Cont_Cxp.Ano_Plazo = 0 And :Cont_Cxp.Mes_Plazo Is Null And :Cont_Cxp.Dias_Plazo Is Null Then&amp;#10;	   :cont_cxp.dias:=:cont_cxp.f_ven - :cont_cxp.f_ini+1;&amp;#10;   End If; */   &amp;#10;/*	If :cont_cxp.tiene_liq = 'S' and :cont_cxp.f_ven is not null Then&amp;#10;		:cont_cxp.fecha_liq := add_months(:cont_cxp.f_ven,2);&amp;#10;	End if;&amp;#10;END;*/"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;BEGIN&amp;#10;  null; &amp;#10;END;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <RecordGroup Name="TIPO" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select c_tip, nom from tipcont_cxp where c_emp = :global.empresa&amp;#10;ORDER BY 1">
+         <RecordGroupColumn Name="C_TIP" DirtyInfo="true" MaximumLength="2" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="40" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="CONTRATISTAS" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select DISTINCT n_ide, &amp;#10;SUBSTR(trae_nombre(:global.empresa,n_ide),1,60)  nom &amp;#10;from CXP_ENC&amp;#10;where n_ide like nvl(:Copia.Proveedor, '%') &amp;#10;and c_emp = :global.empresa order by trae_nombre(:global.empresa,n_ide)">
+         <RecordGroupColumn Name="N_IDE" DirtyInfo="true" MaximumLength="20" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="60" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="N_CXP" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="select    a.n_cxp,a.tipo, b.nom &amp;#10;from      cxp_enc a, tipo_cxp b &amp;#10;where  a.c_emp = :global.empresa  &amp;#10;and      a.n_ide = :Copia.Proveedor &amp;#10;and      a.tipo = b.c_tip &amp;#10;and      a.c_emp = b.c_emp&amp;#10;order by 1 ">
+         <RecordGroupColumn Name="N_CXP" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="TIPO" DirtyInfo="true" MaximumLength="2" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="60" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="TIP_MIN" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="Select  A.Tipo, A.Nom, A.des&amp;#10;From    Tipo_Contrato A, Tipcont_Cxp B&amp;#10;Where  A.C_Emp = :Global.Empresa&amp;#10;And      A.C_Emp = B.C_emp &amp;#10;And      A.Tipo  = B.C_Tip &amp;#10;And      A.Tipo  = :Copia.C_tip  &amp;#10;ORDER BY 1 ">
+         <RecordGroupColumn Name="TIPO" DirtyInfo="true" MaximumLength="3" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="50" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="DES" DirtyInfo="true" MaximumLength="70" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="CONTRATOS" DirtyInfo="true" RecordGroupType="Consulta" RecordGroupQuery="Select  C.N_Cont, C.N_ide, &amp;#10;       SUBSTR(Trae_Nombre (C.c_emp,C.n_ide),1,100) Nombre,&amp;#10;        C.c_tip, C.n_Cxp,C. f_crea_cont, C.tip_min , &amp;#10;       C.f_firma, C.f_ini, C.f_ven ,C.monto , C.NOM_MIN,&amp;#10;        t.nom TIP_CONT, A.DES   NOM_MINUTA,&amp;#10;        C.N_CXP, E.TIPO , D.NOM NOM_TIPO_CXP , &amp;#10;        iva_incluido, nvl(porc_iva,0) porc_iva ,&amp;#10;        c_cos, vlr_hora, ano_plazo, mes_plazo, dias_plazo,&amp;#10;        c.act_basica,c.tipo TIPO_P&amp;#10;From    Cont_Cxp C, tipcont_cxp T , Tipo_Contrato A, CXP_ENC E,&amp;#10;        TIPO_CXP D&amp;#10;Where  C.C_Emp = :Global.Empresa &amp;#10;and c.c_emp= t.c_emp and c.c_tip = t.c_tip &amp;#10;and c.c_emp= A.c_emp and C.C_TIP(+) = A.TIPO &amp;#10;AND c.NOM_MIN(+)=A.NOM &amp;#10;AND C.C_EMP = E.C_EMP AND C.C_AGR = E.C_AGR AND C.N_CXP = E.N_CXP &amp;#10;AND E.C_EMP = D.C_EMP AND E.TIPO = D.C_TIP&amp;#10;&amp;#10;Order by C.N_cont  desc &amp;#10;&amp;#10;">
+         <RecordGroupColumn Name="N_CONT" DirtyInfo="true" MaximumLength="16" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="N_IDE" DirtyInfo="true" MaximumLength="20" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOMBRE" DirtyInfo="true" MaximumLength="100" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="C_TIP" DirtyInfo="true" MaximumLength="3" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="N_CXP" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="F_CREA_CONT" DirtyInfo="true" MaximumLength="7" ColumnDataType="Date"/>
+         <RecordGroupColumn Name="TIP_MIN" DirtyInfo="true" MaximumLength="3" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="F_FIRMA" DirtyInfo="true" MaximumLength="7" ColumnDataType="Date"/>
+         <RecordGroupColumn Name="F_INI" DirtyInfo="true" MaximumLength="7" ColumnDataType="Date"/>
+         <RecordGroupColumn Name="F_VEN" DirtyInfo="true" MaximumLength="7" ColumnDataType="Date"/>
+         <RecordGroupColumn Name="MONTO" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="NOM_MIN" DirtyInfo="true" MaximumLength="50" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="TIP_CONT" DirtyInfo="true" MaximumLength="40" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM_MINUTA" DirtyInfo="true" MaximumLength="70" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="ICRGGQ_0" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="TIPO" DirtyInfo="true" MaximumLength="2" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM_TIPO_CXP" DirtyInfo="true" MaximumLength="60" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="IVA_INCLUIDO" DirtyInfo="true" MaximumLength="1" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="PORC_IVA" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="C_COS" DirtyInfo="true" MaximumLength="12" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="VLR_HORA" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="ANO_PLAZO" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="MES_PLAZO" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="DIAS_PLAZO" DirtyInfo="true" MaximumLength="23" ColumnDataType="Number"/>
+         <RecordGroupColumn Name="ACT_BASICA" DirtyInfo="true" MaximumLength="500" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="TIPO_P" DirtyInfo="true" MaximumLength="1" ColumnDataType="Character"/>
+      </RecordGroup>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" TriggerText="Declare&amp;#10;  Empresa     	Parametros.Emp%Type;&amp;#10;  LogoPath			Varchar2 (200);  &amp;#10;Begin&amp;#10;  --&amp;#10;  -- Maximiza la ventana inicial&amp;#10;  --&amp;#10;  :SYSTEM.MESSAGE_LEVEL:=20;&amp;#10;  Set_Window_Property ('WINDOW0', Window_State, Maximize);&amp;#10;   --&amp;#10;  -- Selecciona el nombre de la empresa&amp;#10;  -- &amp;#10;  :GLOBAL.empresa:= '01';&amp;#10;  :Global.usuario_sp6 :='ADMIN'; &amp;#10;   :TOOLBAR.c_emp  := :GLOBAL.empresa;&amp;#10;    Begin&amp;#10;    Select Emp, logo Into Empresa, :toolbar.nombre_logo&amp;#10;      From Parametros&amp;#10;      Where C_Emp = :TOOLBAR.c_emp;&amp;#10;  Exception&amp;#10;    When no_data_found Then&amp;#10;      --&amp;#10;      -- Si la empresa no está definida se sale de la forma&amp;#10;      --&amp;#10;      MessageBox ('Empresa '||:TOOLBAR.c_emp||' no está definida.');&amp;#10;      Exit_Form (No_Validate);     &amp;#10;  End;&amp;#10;  --&amp;#10;  -- Despliega el nombre de la empresa en una o dos líneas&amp;#10;  -- dependiendo de la longitud del nombre&amp;#10;  --&amp;#10;  :Toolbar.Nombre_Empresa1 := Empresa;&amp;#10;  :Toolbar.Nombre_Empresa2 := Empresa;&amp;#10;  If (NVL(Length (:Toolbar.Nombre_Empresa1), 0) > 30) Then&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, Property_True);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, Property_False);&amp;#10;  Else&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, property_False);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, property_True);&amp;#10;  End If;&amp;#10;  --&amp;#10;  -- Despliega el logo de la empresa&amp;#10;  --&amp;#10;  execute_trigger('lee_imagenes');&amp;#10;&amp;#10;  --&amp;#10;  -- Llama al procedimiento de inicio particular de cada forma&amp;#10;  --&amp;#10;  Default_Value ('***', 'global.audsid'); &amp;#10;  Begin&amp;#10;  	Select machine Into Empresa&amp;#10;      From v$usr_sess&amp;#10;      Where audsid = :Global.audsid;&amp;#10;  Exception&amp;#10;    When others Then&amp;#10;  ---   Exit_Form (No_Validate);            &amp;#10;   Null;&amp;#10;  End;&amp;#10;End;" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="CURR_RECORD" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA1" FontSize="900" BackColor="gray36" DirtyInfo="true" FontName="Century Gothic" ForegroundColor="white" FontStyle="Normal"/>
+      <Window Name="WINDOW0" MinimizeAllowed="true" Height="600" DirtyInfo="true" Bevel="Resaltado" Width="800" HorizontalToolbarCanvasName="" PrimaryCanvas="PRINCIPAL" Title="Contratos" VisualAttributeName="DEFAULT" ClearAllowed="true" ShowHorizontalScrollbar="false" MaximizeAllowed="true" MinimizeTitle="Contratos" ShowVerticalScrollbar="false" ResizeAllowed="true" MoveAllowed="true"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>

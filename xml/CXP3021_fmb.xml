@@ -1,0 +1,304 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Module version="101020002" xmlns="http://xmlns.oracle.com/Forms">
+   <FormModule Name="CXP3021" ConsoleWindow="WINDOW0" RecordVisualAttributeGroupName="" DirtyInfo="true" RuntimeComp="4.5" MenuModule="MPPAL" FirstNavigationBlockName="CONT_CXP" CursorMode="Abrir" MenuRole="" Title="FORMA DE CONTRATOS" InitializeMenu="MPPAL">
+      <Coordinate CharacterCellWidth="6" CoordinateSystem="Real" CharacterCellHeight="17" RealUnit="Puntos" DefaultFontScaling="true"/>
+      <Alert Name="MSGERR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="PREGUNTAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Alert Name="MESSAGEBOX" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Block Name="CONTROL" DirtyInfo="true" QueryDataSourceType="Ninguno" DMLDataType="Ninguno" ShowScrollbar="false" RecordsDisplayCount="1" DatabaseBlock="false" VisualAttributeName="DEFAULT" RecordOrientation="Vertical">
+         <Item Name="C_AGR" AutoHint="true" Height="14" Width="43" DistanceBetweenRecords="0" QueryLength="2" Label="C Agr" Hint="Por Favor Digite El Código De La Agencia" ShowHorizontalScrollbar="false" MaximumLength="2" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="true" DirtyInfo="true" Bevel="Hundido" XPosition="106" Visible="true" QueryAllowed="true" LovName="AGENCIA" DatabaseItem="false" Required="false" CompressionQuality="Ninguno" ValidateFromList="true" DataType="Char" VisualAttributeName="NORMAL" YPosition="87" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="true" CanvasName="PRINCIPAL" Enabled="true"/>
+         <Item Name="NOMAGE" AutoHint="true" Height="14" InsertAllowed="false" Width="156" DistanceBetweenRecords="0" QueryLength="40" Label="N Ide" Hint="Nombre Del Contratista." ShowHorizontalScrollbar="false" MaximumLength="60" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="164" Visible="true" QueryAllowed="true" DatabaseItem="false" CompressionQuality="Ninguno" Required="false" DataType="Char" YPosition="70" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="PROG_PROY" AutoHint="true" Height="14" InsertAllowed="true" Width="52" UpdateIfNull="true" DistanceBetweenRecords="0" QueryLength="4" Label="Prog Proy" Hint="Programa o Proyecto Al Que Pertenece El Contrato" ShowHorizontalScrollbar="false" ItemsDisplay="1" MaximumLength="4" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="true" DirtyInfo="true" Bevel="Hundido" XPosition="149" Visible="true" QueryAllowed="true" LovName="PROYECTO" DatabaseItem="false" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="true" DataType="Char" VisualAttributeName="NORMAL" YPosition="87" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="true" CanvasName="PRINCIPAL" Enabled="true">
+            <Trigger Name="KEY-NEXT-ITEM" TriggerText="if :control.prog_proy is not null then&amp;#10;   buscar;&amp;#10;end if;"/>
+         </Item>
+         <Item Name="DESPROY" UpdateAllowed="false" DirtyInfo="true" Height="14" XPosition="200" Bevel="Hundido" QueryAllowed="false" InsertAllowed="false" DatabaseItem="false" Width="295" NextNavigationItemName="" CompressionQuality="Ninguno" YPosition="87" VisualAttributeName="NORMAL" QueryLength="0" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" ShowHorizontalScrollbar="false" ItemsDisplay="1" MaximumLength="100" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CanvasName="PRINCIPAL" Enabled="false"/>
+      </Block>
+      <Block Name="CONT_CXP" UpdateAllowed="false" DirtyInfo="true" WhereClause="C_Emp =  :Global.empresa and&amp;#10;C_Agr =  :Control.c_agr  and&amp;#10;Prog_Proy like Nvl(:control.prog_proy,'%')  " QueryDataSourceType="Tabla" InsertAllowed="false" ScrollbarWidth="10" DeleteAllowed="false" DMLDataName="CONT_CXP" DatabaseBlock="true" ScrollbarXPosition="512" VisualAttributeName="DEFAULT" OrderByClause="" RecordOrientation="Vertical" BackColor="gray4" QueryDataSourceName="CONT_CXP" ScrollbarYPosition="139" DMLDataType="Tabla" ShowScrollbar="true" EnforcedPrimaryKey="false" ScrollbarCanvasName="PRINCIPAL" ScrollbarLength="113" NavigationStyle="Cambiar Registro" RecordsDisplayCount="8">
+         <Item Name="C_EMP" Height="14" InsertAllowed="false" Width="50" DistanceBetweenRecords="0" QueryLength="0" Label="C Emp" Hint="Enter value for : C_EMP" ShowHorizontalScrollbar="false" MaximumLength="2" ItemType="Área del Usuario" ShowVerticalScrollbar="false" UpdateAllowed="false" Bevel="Hundido" XPosition="63" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" Required="true" DataType="Char" VisualAttributeName="DEFAULT" YPosition="203" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="C_AGR" AutoHint="true" Height="14" InsertAllowed="false" Width="26" DistanceBetweenRecords="0" QueryLength="0" Label="C Agr" Hint="Código De La Agencia" ShowHorizontalScrollbar="false" MaximumLength="2" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="61" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" Required="true" ValidateFromList="true" DataType="Char" YPosition="59" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="NOMAGE" AutoHint="true" Height="14" InsertAllowed="false" Width="156" DistanceBetweenRecords="0" QueryLength="0" Label="N Ide" Hint="Nombre Del Contratista." ShowHorizontalScrollbar="false" MaximumLength="60" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="164" Visible="true" QueryAllowed="false" DatabaseItem="false" CompressionQuality="Ninguno" NextNavigationItemName="" Required="false" DataType="Char" YPosition="70" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="N_CONT" AutoHint="true" Height="14" InsertAllowed="false" Width="47" DistanceBetweenRecords="0" QueryLength="0" Label="N Cont" Hint="Por Favor Digite el Número del Contrato." ShowHorizontalScrollbar="false" MaximumLength="16" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="76" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Char" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="N_IDE" AutoHint="true" Height="14" InsertAllowed="false" Width="65" DistanceBetweenRecords="0" QueryLength="0" Label="N Ide" Hint="Por Favor Digite El Número de Identificación del Contratista o Consulte La Lista De Valores." ShowHorizontalScrollbar="false" MaximumLength="20" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="123" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="false" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="true" DataType="Char" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="true" CanvasName="PRINCIPAL" Enabled="true"/>
+         <Item Name="NOMPROV" AutoHint="true" Height="14" InsertAllowed="false" Width="140" DistanceBetweenRecords="0" QueryLength="0" Label="N Ide" Hint="Nombre Del Contratista." ShowHorizontalScrollbar="false" ItemsDisplay="1" MaximumLength="60" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="92" Visible="true" QueryAllowed="false" DatabaseItem="false" Required="false" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Char" VisualAttributeName="NORMAL" YPosition="267" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="N_CXP" AutoHint="true" Height="14" InsertAllowed="false" Width="50" DistanceBetweenRecords="0" QueryLength="0" Label="N Cont" Hint="Número de la Cuenta Por Pagar." ShowHorizontalScrollbar="false" MaximumLength="6" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="188" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="false" DataType="Number" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="INTERVENT" AutoHint="true" Height="14" InsertAllowed="false" Width="61" DistanceBetweenRecords="0" QueryLength="0" Label="Intervent" Hint="Numero de Identificación Del Interventor" ShowHorizontalScrollbar="false" MaximumLength="20" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="262" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="false" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Char" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false">
+            <Trigger Name="POST-CHANGE" TriggerText="if :cont_cxp.intervent is not null then&amp;#10;begin&amp;#10; select nom&amp;#10; into :cont_cxp.nominter &amp;#10; from nits &amp;#10; where  c_emp = :global.empresa and&amp;#10;        n_ide = :cont_cxp.intervent and &amp;#10;        est = 'A' order by nom; &amp;#10; exception&amp;#10;    when no_data_found then&amp;#10;      :cont_cxp.nominter :='Interventor No Se Encuentra Registrado';&amp;#10;      raise form_trigger_failure;&amp;#10;end;&amp;#10;end if;&amp;#10;"/>
+         </Item>
+         <Item Name="NOMINTER" UpdateAllowed="false" DirtyInfo="true" Height="14" XPosition="371" Bevel="Hundido" QueryAllowed="false" InsertAllowed="false" DatabaseItem="false" Width="135" NextNavigationItemName="" CompressionQuality="Ninguno" YPosition="267" VisualAttributeName="NORMAL" QueryLength="0" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" ShowHorizontalScrollbar="false" ItemsDisplay="1" MaximumLength="60" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="C_TIP" AutoHint="true" Height="14" InsertAllowed="false" Width="24" DistanceBetweenRecords="0" QueryLength="0" Label="C Tip" Hint="Codigo Del Tipo De Contrato o Consulte La Lista De Ayuda." ShowHorizontalScrollbar="false" MaximumLength="2" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="238" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="true" DataType="Char" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="DESTIPO" UpdateAllowed="false" DirtyInfo="true" Height="14" XPosition="241" Bevel="Hundido" QueryAllowed="false" InsertAllowed="false" DatabaseItem="false" Width="125" NextNavigationItemName="" CompressionQuality="Ninguno" YPosition="267" VisualAttributeName="NORMAL" QueryLength="0" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" ShowHorizontalScrollbar="false" ItemsDisplay="1" MaximumLength="40" ShowVerticalScrollbar="false" ItemType="Casilla de Control" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="OBJETO" AutoHint="true" Height="14" InsertAllowed="false" Width="342" DistanceBetweenRecords="0" QueryLength="0" Label="Objeto" Hint="Objeto Del Contrato." ShowHorizontalScrollbar="false" EditName="EDITOR" ItemsDisplay="1" MaximumLength="4000" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" EditYPosition="100" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="142" Visible="true" QueryAllowed="false" EditXPosition="100" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Char" VisualAttributeName="NORMAL" YPosition="288" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" MultiLine="false" Enabled="false">
+            <Trigger Name="WHEN-MOUSE-CLICK" TriggerText="EDIT_TEXTITEM(100,300,300,100);"/>
+         </Item>
+         <Item Name="PROG_PROY" AutoHint="true" Height="14" InsertAllowed="false" Width="28" DistanceBetweenRecords="0" QueryLength="0" Label="Prog Proy" Hint="Programa o Proyecto Al Que Pertenece El Contrato" ShowHorizontalScrollbar="false" MaximumLength="4" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="145" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="true" DataType="Char" YPosition="99" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="F_INI" AutoHint="true" Height="14" InsertAllowed="false" Width="58" DistanceBetweenRecords="0" QueryLength="0" Label="F Ini" Hint="Fecha De Inicio Del Contrato." ShowHorizontalScrollbar="false" MaximumLength="10" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" FormatMask="DD-MM-YYYY" UpdateAllowed="false" Justification="Centro" DirtyInfo="true" Bevel="Hundido" XPosition="322" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Date" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="F_VEN" AutoHint="true" Height="14" InsertAllowed="false" Width="56" DistanceBetweenRecords="0" QueryLength="0" Label="F Ven" Hint="Fecha De Vencimiento  Del Contrato." ShowHorizontalScrollbar="false" MaximumLength="10" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" FormatMask="DD-MM-YYYY" UpdateAllowed="false" Justification="Centro" DirtyInfo="true" Bevel="Hundido" XPosition="380" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Date" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="MONTO" AutoHint="true" Height="14" InsertAllowed="false" Width="76" DistanceBetweenRecords="0" QueryLength="0" Label="Monto" Hint="Monto Del Contrato." ShowHorizontalScrollbar="false" MaximumLength="16" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" FormatMask="999G999G999G990" UpdateAllowed="false" Justification="Derecha" DirtyInfo="true" Bevel="Hundido" XPosition="435" Visible="true" QueryAllowed="false" DatabaseItem="true" Required="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Number" VisualAttributeName="NORMAL" YPosition="139" RecordVisualAttributeGroupName="CURR_RECORD" KeyboardNavigable="false" CanvasName="PRINCIPAL" Enabled="false"/>
+         <Item Name="MON" AutoHint="true" Height="15" InsertAllowed="false" Width="60" DistanceBetweenRecords="0" QueryLength="0" Label="Mon" Hint="Moneda" ShowHorizontalScrollbar="false" MaximumLength="7" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" UpdateAllowed="false" Justification="Centro" DirtyInfo="true" Bevel="Hundido" XPosition="218" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" ValidateFromList="true" DataType="Char" YPosition="169" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="TAS" AutoHint="true" Height="14" InsertAllowed="false" Width="47" DistanceBetweenRecords="0" QueryLength="0" Label="Tas" Hint="Tasa Del Contrato." ShowHorizontalScrollbar="false" MaximumLength="16" ShowVerticalScrollbar="false" ItemType="Área del Usuario" CaseRestriction="Superior" FormatMask="999,999,999,999.99" UpdateAllowed="false" DirtyInfo="true" Bevel="Hundido" XPosition="286" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Number" YPosition="169" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Item Name="EST" Height="14" InsertAllowed="false" Width="14" DistanceBetweenRecords="0" QueryLength="0" Label="Est" Hint="Enter value for : EST" ShowHorizontalScrollbar="false" MaximumLength="1" ItemType="Área del Usuario" ShowVerticalScrollbar="false" DirtyInfo="true" UpdateAllowed="false" Bevel="Hundido" XPosition="368" Visible="true" QueryAllowed="false" DatabaseItem="true" CompressionQuality="Ninguno" NextNavigationItemName="" DataType="Char" YPosition="140" KeyboardNavigable="false" CanvasName="" Enabled="false"/>
+         <Trigger Name="POST-QUERY" TriggerText=":cont_cxp.nomprov := trae_nombre(:global.empresa,:cont_cxp.n_ide);&amp;#10;begin&amp;#10;    select nom&amp;#10;    into :cont_cxp.destipo&amp;#10;    from tipcont_cxp&amp;#10;    where c_emp = :global.empresa and&amp;#10;          c_tip = :cont_cxp.c_tip;&amp;#10;    exception&amp;#10;       when no_data_found then&amp;#10;         null; &amp;#10;end;"/>
+      </Block>
+      <Block Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true">
+         <Item Name="NOMBRE_BLOQUE" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_LOGO" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="C_EMP" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA1" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="NOMBRE_EMPRESA2" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="ICONO_EMPRESA" DirtyInfo="true" SubclassSubObject="true"/>
+         <Item Name="BOTON_IMPRIMIR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_SAVE" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_LISTA" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_HELP" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="EXCEL_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_EXIT" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_NUEVO" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BORRAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_CLEAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="BOTON_BUSCAR" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="PRIMERO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ATRAS_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ADELANTE_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Item Name="ULTIMO_SP6" DirtyInfo="true" SubclassSubObject="true">
+            <Trigger Name="WHEN-MOUSE-CLICK" DirtyInfo="true" SubclassSubObject="true"/>
+         </Item>
+         <Trigger Name="PRE-BLOCK" TriggerText="&amp;#10;:toolbar.nombre_bloque := NVL(:SYSTEM.CURSOR_BLOCK,'TOOLBAR');" DirtyInfo="true" SubclassSubObject="true"/>
+      </Block>
+      <Canvas Name="PRINCIPAL" ViewportHeight="414" ViewportXPosition="0" DirtyInfo="true" Height="600" WindowName="WINDOW0" ShowHorizontalScrollbar="false" ShowVerticalScrollbar="false" Width="800" ViewportYPosition="0" ViewportWidth="480" VisualAttributeName="DEFAULT">
+         <Graphics Name="ROUNDRECT199" GraphicsText="" Height="195" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="453" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="4" EdgeBackColor="white" DirtyInfo="true" XPosition="72" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="118" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="" CornerRadiusX="4" JoinStyle="Bisel"/>
+         <Graphics Name="ROUNDRECT202" GraphicsText="" Height="38" InternalLineWidth="113" VerticalMargin="14" GraphicsFontColor="" GraphicsFontSpacing="Muy Denso" Width="401" GraphicsFontSize="0" GraphicsFontWeight="Muy Clara" StartPromptOffset="7" FillPattern="transparent" GraphicsFontColorCode="0" HorizontalObjectOffset="14" CornerRadiusY="4" EdgeBackColor="white" DirtyInfo="true" XPosition="98" Bevel="Ninguno" GraphicsFontStyle="0" ScrollbarWidth="14" HorizontalMargin="7" EdgePattern="solid" YPosition="70" GraphicsType="Rectángulo Redondeado" BackColor="r75g88b100" EdgeForegroundColor="r25g0b75" GraphicsFontName="" CornerRadiusX="4" JoinStyle="Bisel"/>
+         <Graphics Name="TEXT8" GraphicsText="Agencia" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="34" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="107" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="74" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT9">
+               <TextSegment Name="TEXTSTR10" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Agencia" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT11" GraphicsText="Objeto" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="28" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="108" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="290" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT12">
+               <TextSegment Name="TEXTSTR13" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Objeto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT14" GraphicsText="Tipo" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="18" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="241" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT15">
+               <TextSegment Name="TEXTSTR16" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Tipo" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT17" GraphicsText="Fec Inicio" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="38" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="335" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT18">
+               <TextSegment Name="TEXTSTR19" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Fec Inicio" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT20" GraphicsText="Fec Vence" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="44" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="382" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT21">
+               <TextSegment Name="TEXTSTR22" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Fec Vence" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT23" GraphicsText="Monto" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="26" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="458" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT24">
+               <TextSegment Name="TEXTSTR25" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Monto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT26" GraphicsText="Interventor" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="47" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="265" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT27">
+               <TextSegment Name="TEXTSTR28" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Interventor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT29" GraphicsText="Cuenta " VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="32" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="188" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT30">
+               <TextSegment Name="TEXTSTR31" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Cuenta " FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT32" GraphicsText="Proyecto" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="37" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="152" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="74" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT33">
+               <TextSegment Name="TEXTSTR34" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Proyecto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT35" GraphicsText="Nombre Proyecto" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="72" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="311" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="74" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT36">
+               <TextSegment Name="TEXTSTR37" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Nombre Proyecto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT39" GraphicsText="Tipo Contrato" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="56" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="244" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="255" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT40">
+               <TextSegment Name="TEXTSTR41" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Tipo Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT42" GraphicsText="Nombre Interventor" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="82" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="377" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="255" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT43">
+               <TextSegment Name="TEXTSTR44" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Nombre Interventor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT45" GraphicsText="Proveedor" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="43" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="125" Bevel="Hundido" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT46">
+               <TextSegment Name="TEXTSTR47" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT48" GraphicsText="Contrato" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="36" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="79" Bevel="Hundido" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="127" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT49">
+               <TextSegment Name="TEXTSTR50" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Contrato" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT51" GraphicsText="Nombre Proveedor" VerticalOrigin="Superior" InternalLineWidth="1" Height="11" VerticalMargin="14" GraphicsFontColor="r25g0b75" GraphicsFontSpacing="Normal" ForegroundColor="darkcyan" FixedBoundingBox="false" Width="79" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="900" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="21" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="99" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="255" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Tahoma" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT52">
+               <TextSegment Name="TEXTSTR53" FontSize="900" DirtyInfo="true" FontName="Tahoma" ForegroundColor="r25g0b75" FontWeight="Negrita" FontStyle="Normal" Text="Nombre Proveedor" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="TEXT203" GraphicsText="Consulta de Contratos por Proyecto" VerticalOrigin="Superior" InternalLineWidth="1" Height="12" VerticalMargin="14" GraphicsFontColor="white" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="168" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="1" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="171" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="34" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT4">
+               <TextSegment Name="TEXTSTR5" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="white" FontWeight="Negrita" FontStyle="Normal" Text="Consulta de Contratos por Proyecto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+         <Graphics Name="GRAPHIC205" GraphicsText="Consulta de Contratos por Proyecto" VerticalOrigin="Superior" InternalLineWidth="1" Height="12" VerticalMargin="14" GraphicsFontColor="darkblue" GraphicsFontSpacing="Normal" ForegroundColor="black" FixedBoundingBox="false" Width="168" InternalRotationAngle="0" HorizontalJustification="Izquierda" GraphicsFontSize="1600" GraphicsFontWeight="Negrita" StartPromptOffset="5" CustomSpacing="0" FillPattern="none" GraphicsFontColorCode="79" FontScaleable="false" HorizontalObjectOffset="9" EdgeBackColor="white" LineSpacing="Único" WrapText="true" CapStyle="Plana" DirtyInfo="true" XPosition="172" Bevel="Ninguno" ScrollbarWidth="9" GraphicsFontStyle="0" HorizontalMargin="5" BoundingBoxScalable="true" DashStyle="Sólido" EdgePattern="none" YPosition="33" GraphicsType="Texto" BackColor="gray" VerticalJustification="Superior" EdgeForegroundColor="gray" GraphicsFontName="Arial" LanguageDirection="Por Defecto" HorizontalOrigin="Izquierda" JoinStyle="Bisel">
+            <CompoundText Name="CMPTXT4">
+               <TextSegment Name="TEXTSTR5" FontSize="1600" DirtyInfo="true" FontName="Arial" ForegroundColor="darkblue" FontWeight="Negrita" FontStyle="Normal" Text="Consulta de Contratos por Proyecto" FontSpacing="Normal"/>
+            </CompoundText>
+         </Graphics>
+      </Canvas>
+      <Canvas Name="TOOLBAR1" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Canvas Name="TOOLBAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Editor Name="EDITOR" Height="200" XPosition="100" ShowVerticalScrollbar="false" Width="200" YPosition="100" VisualAttributeName="DEFAULT" Title="Editor de Texto"/>
+      <ModuleParameter Name="C_EMP"/>
+      <ModuleParameter Name="C_AGR"/>
+      <ModuleParameter Name="N_IDE"/>
+      <LOV Name="AGENCIA" RecordGroupName="AGENCIA" DirtyInfo="true" Height="200" Width="350" VisualAttributeName="LISTA1" Title="Agencias">
+         <LOVColumnMapping Name="CÓDIGO" ReturnItem="CONTROL.C_AGR" DisplayWidth="14" Title="Código"/>
+         <LOVColumnMapping Name="NOMBRE" ReturnItem="CONTROL.NOMAGE" DisplayWidth="185" Title="Nombre"/>
+      </LOV>
+      <LOV Name="PROYECTO" RecordGroupName="PROYECTO" DirtyInfo="true" Height="200" Width="350" VisualAttributeName="LISTA1" Title="Proyectos">
+         <LOVColumnMapping Name="C_PROY" DirtyInfo="true" ReturnItem="CONTROL.PROG_PROY" DisplayWidth="40" Title="Proyecto"/>
+         <LOVColumnMapping Name="NOM" DirtyInfo="true" ReturnItem="CONTROL.DESPROY" DisplayWidth="275" Title="Nombre"/>
+      </LOV>
+      <ProgramUnit Name="BORRAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE borrar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;   null;&amp;#10; END;"/>
+      <ProgramUnit Name="BUSCAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE buscar IS&amp;#10;BEGIN&amp;#10;   GO_BLOCK('cont_cxp');&amp;#10;   clear_block(no_validate);&amp;#10;   execute_query(all_records);&amp;#10;END;"/>
+      <ProgramUnit Name="GRABAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE grabar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;   null;&amp;#10;END;"/>
+      <ProgramUnit Name="IMPRIMIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE IMPRIMIR IS&amp;#10;BEGIN&amp;#10;  NULL;&amp;#10;END;"/>
+      <ProgramUnit Name="INICIO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE INICIO IS&amp;#10;BEGIN&amp;#10; Execute_Trigger ('INIT');&amp;#10; Set_Item_Property ('ToolBar.Boton_Imprimir', Enabled, Property_False);&amp;#10; Set_Item_Property ('ToolBar.Boton_Save',     Enabled, Property_False);&amp;#10; Set_Item_Property ('ToolBar.Boton_Nuevo',    Enabled, Property_False);&amp;#10; Set_Item_Property ('ToolBar.Boton_Borrar',   Enabled, Property_False);&amp;#10; If (:parameter.c_emp Is Not Null And&amp;#10;     :parameter.c_agr Is Not Null And&amp;#10;     :parameter.n_ide Is Not Null) Then&amp;#10;    :Global.Empresa := :Parameter.C_Emp;&amp;#10;    :Control.C_Agr  := :Parameter.C_Agr;&amp;#10;    Go_Block ('Cont_Cxp');&amp;#10;    Execute_Query (All_Records);&amp;#10; End If;&amp;#10; Go_Block ('Control');&amp;#10; Go_Item ('Control.c_agr'); &amp;#10;END;"/>
+      <ProgramUnit Name="LIMPIAR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE limpiar IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 1;&amp;#10;  If (:System.form_status = 'CHANGED' Or :System.form_status = 'NEW') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Blanquear?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Clear_Form (No_Validate);&amp;#10;    Inicio;&amp;#10;  End If;&amp;#10;END;"/>
+      <ProgramUnit Name="LISTA" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE lista IS&amp;#10;BEGIN&amp;#10;  List_values;&amp;#10;END;"/>
+      <ProgramUnit Name="NUEVO" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE nuevo IS&amp;#10;BEGIN&amp;#10;     null;&amp;#10;END;"/>
+      <ProgramUnit Name="SALIR" ProgramUnitType="Procedimiento" ProgramUnitText="PROCEDURE salir IS&amp;#10;res number;&amp;#10;BEGIN&amp;#10;  Res := 0;&amp;#10;  If (:System.form_status = 'CHANGED') Then&amp;#10;    Res := Preguntar ('La Forma Tiene Datos Sin Grabar. Desea Almacenarlos Ahora?');&amp;#10;  End If;&amp;#10;  If (Res = 1) Then&amp;#10;    Grabar;&amp;#10;  End If;&amp;#10;  Exit_form(no_validate);&amp;#10;END;"/>
+      <PropertyClass Name="CHECK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_INFO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <PropertyClass Name="ITEM_NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <RecordGroup Name="PROYECTO" DirtyInfo="true" RecordGroupQuery="select c_proy, nom from proy_cxp where c_emp = :global.empresa">
+         <RecordGroupColumn Name="C_PROY" DirtyInfo="true" MaximumLength="4" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOM" DirtyInfo="true" MaximumLength="60" ColumnDataType="Character"/>
+      </RecordGroup>
+      <RecordGroup Name="AGENCIA" RecordGroupType="Consulta" RecordGroupQuery="select c_age código, nom nombre from agencia where c_emp = :global.empresa">
+         <RecordGroupColumn Name="CÓDIGO" MaximumLength="2" ColumnDataType="Character"/>
+         <RecordGroupColumn Name="NOMBRE" MaximumLength="40" ColumnDataType="Character"/>
+      </RecordGroup>
+      <Trigger Name="WHEN_NEW" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LEE_IMAGENES" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-WINDOW-RESIZED" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="INIT" TriggerText="Declare&amp;#10;  Empresa     	Parametros.Emp%Type;&amp;#10;  LogoPath			Varchar2 (200);  &amp;#10;Begin&amp;#10;  --&amp;#10;  -- Maximiza la ventana inicial&amp;#10;  --&amp;#10;  :SYSTEM.MESSAGE_LEVEL:=20;&amp;#10;  Set_Window_Property ('WINDOW0', Window_State, Maximize);&amp;#10;  &amp;#10;  --&amp;#10;  -- Selecciona el nombre de la empresa&amp;#10;  --&amp;#10; -- :global.empresa :='01';&amp;#10;  &amp;#10;  Begin&amp;#10;    Select C_EMP, Emp, logo ,  C_EMP &amp;#10;    Into   :GLOBAL.empresa, Empresa, :toolbar.nombre_logo,  :TOOLBAR.c_emp&amp;#10;      From Parametros;&amp;#10;  Exception&amp;#10;    When no_data_found Then&amp;#10;           --&amp;#10;      -- Si la empresa no está definida se sale de la forma&amp;#10;      --&amp;#10;      MessageBox ('Noy Empresas definidas.');&amp;#10;      Exit_Form (No_Validate);     &amp;#10;    When too_many_rows Then&amp;#10;         --&amp;#10;         -- Si la empresa no está definida se sale de la forma&amp;#10;         --&amp;#10;         begin&amp;#10;            select c_emp&amp;#10;              into :global.empresa&amp;#10;              from usu_age&amp;#10;              where usuario = :global.usuario_sp6; &amp;#10;            Exception&amp;#10;                  When no_data_found Then&amp;#10;                       --&amp;#10;                       -- Si la empresa no está definida se sale de la forma&amp;#10;                       --&amp;#10;                       MessageBox ('Noy Empresas definidas para el usuario '||:global.usuario_sp6);&amp;#10;                       Exit_Form (No_Validate);                   	        &amp;#10;  	               When too_many_rows Then &amp;#10;  	                    null; &amp;#10;  	     end; &amp;#10;  end;&amp;#10;  :TOOLBAR.c_emp := :GLOBAL.empresa; &amp;#10;  Begin&amp;#10;    Select Emp, logo &amp;#10;    Into Empresa, :toolbar.nombre_logo&amp;#10;      From Parametros&amp;#10;      Where C_Emp = :TOOLBAR.c_emp;&amp;#10;  Exception&amp;#10;    When no_data_found Then&amp;#10;      --&amp;#10;      -- Si la empresa no está definida se sale de la forma&amp;#10;      --&amp;#10;      MessageBox ('Empresa '||:TOOLBAR.c_emp||' no está definida.');&amp;#10;      Exit_Form (No_Validate);     &amp;#10;  End;&amp;#10;  --&amp;#10;  -- Despliega el nombre de la empresa en una o dos líneas&amp;#10;  -- dependiendo de la longitud del nombre&amp;#10;  --&amp;#10;  :Toolbar.Nombre_Empresa1 := Empresa;&amp;#10;  :Toolbar.Nombre_Empresa2 := Empresa;&amp;#10;  If (NVL(Length (:Toolbar.Nombre_Empresa1), 0) > 30) Then&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, Property_True);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, Property_False);&amp;#10;  Else&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa2', Displayed, property_False);&amp;#10;    Set_Item_Property ('Toolbar.Nombre_Empresa1', Displayed, property_True);&amp;#10;  End If;&amp;#10;  --&amp;#10;  -- Despliega el logo de la empresa&amp;#10;  --&amp;#10;  execute_trigger('lee_imagenes');&amp;#10;&amp;#10;  --&amp;#10;  -- Llama al procedimiento de inicio particular de cada forma&amp;#10;  --&amp;#10;  Default_Value ('***', 'global.audsid'); &amp;#10;  Begin&amp;#10;  	Select machine Into Empresa&amp;#10;      From v$usr_sess&amp;#10;      Where audsid = :Global.audsid;&amp;#10;  Exception&amp;#10;    When others Then&amp;#10;   --  Exit_Form (No_Validate);            &amp;#10;   NULL; &amp;#10;  End;&amp;#10;End;" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-ENTER" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-LEAVE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-MOUSE-DOUBLECLICK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-ERROR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ON-MESSAGE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NXTBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PRVBLK" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-NEXT-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-PREV-ITEM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-OTHERS" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-UP" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-DOWN" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EXIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-LISTVAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-CLRFRM" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-COMMIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="KEY-EDIT" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="GRABAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="SALIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LIMPIAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="IMPRIMIR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BORRAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="NUEVO" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="BUSCAR" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="ACERCA_DE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <Trigger Name="WHEN-NEW-FORM-INSTANCE" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="CURR_RECORD" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="HILIGTH" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="NORMAL" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="ETIQUETA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA" DirtyInfo="true" SubclassObjectGroup="true"/>
+      <VisualAttribute Name="LISTA1" FontSize="900" BackColor="gray36" DirtyInfo="true" FontName="Century Gothic" ForegroundColor="white" FontStyle="Normal"/>
+      <Window Name="WINDOW0" MinimizeAllowed="true" Height="600" DirtyInfo="true" Bevel="Resaltado" Width="800" HorizontalToolbarCanvasName="" PrimaryCanvas="" Title="Contratos por Proyecto" VisualAttributeName="DEFAULT" ClearAllowed="true" ShowHorizontalScrollbar="false" MaximizeAllowed="true" MinimizeTitle="Contratos por Proyecto" ShowVerticalScrollbar="false" ResizeAllowed="true" MoveAllowed="true"/>
+      <ObjectGroup Name="LLEVAME_COMO_SUBCLASE" ParentType="23" DirtyInfo="true" ParentName="LLEVAME_COMO_SUBCLASE" ParentModule="REFER_SP6" ParentFilename="Refer_SP6.fmb" ParentModuleType="12">
+         <ObjectGroupChild Name="WHEN_NEW" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR1" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LEE_IMAGENES" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MSGERR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CHECK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_INFO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ITEM_NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="PREGUNTAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="MESSAGEBOX" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="TOOLBAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="CURR_RECORD" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="HILIGTH" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NORMAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ETIQUETA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-WINDOW-RESIZED" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="INIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-ENTER" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-LEAVE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-MOUSE-DOUBLECLICK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-ERROR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ON-MESSAGE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NXTBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PRVBLK" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-NEXT-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-PREV-ITEM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-OTHERS" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-UP" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-DOWN" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EXIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-LISTVAL" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-CLRFRM" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-COMMIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="KEY-EDIT" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="GRABAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="SALIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LIMPIAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="IMPRIMIR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BORRAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="NUEVO" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="LISTA" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="BUSCAR" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="ACERCA_DE" SubclassSubObject="true"/>
+         <ObjectGroupChild Name="WHEN-NEW-FORM-INSTANCE" SubclassSubObject="true"/>
+      </ObjectGroup>
+   </FormModule>
+</Module>
