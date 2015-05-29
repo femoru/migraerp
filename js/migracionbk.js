@@ -1,11 +1,11 @@
 var jsonWork;
 var zoom = 1.8;
-var estilo = "label{position:absolute;}";
+var estilo = "";
 var proced = new Object();
 
 
 $( document ).ready(function() {
-    console.log("ready!");
+    logger("ready!");
 
 	$("#desHtml").hide();
 	$("#desCSS").hide();
@@ -14,10 +14,13 @@ $( document ).ready(function() {
     $("#ghtml").on('click',function(){
     	zoom = $("#zoom").val();
     	$("#divhtml").empty();
-    	$.get("xml/" + $("#forma").val()+".xml",function(xml){
+    	$.get("xml/" + $("#forma").val()+"_fmb.xml",function(xml){
+    		estilo = "";
     		var json = $.xml2json(xml)
+    		jsonWork = json.FormModule;
     		crearHTML(json.FormModule);
     		$("#respjson").text(JSON.stringify(json));
+
 	    });
     	$("#desHtml").show();
 		$("#desCSS").show();
@@ -25,8 +28,9 @@ $( document ).ready(function() {
 	});
 	$("#gpkg").on('click',function(){
 		$("#divhtml").empty();
-		$.get("xml/" + $("#forma").val()+".xml",function(xml){
+		$.get("xml/" + $("#forma").val()+"_fmb.xml",function(xml){
     		var json = $.xml2json(xml)
+    		jsonWork = json.FormModule;
     		extraerUnidades(json.FormModule);
     		$("#respjson").text(JSON.stringify(json));
 	    });
@@ -34,6 +38,9 @@ $( document ).ready(function() {
 
    
 });
+function logger(msj){
+	console.log(msj);
+}
 
 function crearHTML(json){
 	jsonWork = json;
@@ -78,8 +85,8 @@ function pintarVentana(window){
 	}).appendTo("#divhtml");
 
 	estilo += "#w"+window.Name+"{"+
-		"width:" + zoom * window.Width + "px;" + 
-		"height:" + zoom * window.Height + "px;"+
+		"width:" + Math.round(zoom * window.Width) + "px;" + 
+		"height:" + Math.round(zoom * window.Height) + "px;"+
 		"}";
 }
 
@@ -91,8 +98,8 @@ function pintarCanvas(canvas){
 	}).appendTo("#w" + canvas.WindowName);
 
 	estilo += "#c"+canvas.Name+"{"+
-		"width:" + zoom * canvas.Width + "px;" + 
-		"height:" + zoom * canvas.Height + "px;"+
+		"width:" + Math.round(zoom * canvas.Width) + "px;" + 
+		"height:" + Math.round(zoom * canvas.Height) + "px;"+
 		"position:relative;"+
 		"}";
 
@@ -106,9 +113,23 @@ function leerGraphics(Graphics,canvas){
 	}else{
 		for (var i = 0; i < Graphics.length; i++) {
 			pintarGraphics(Graphics[i],canvas);
-
 		};
 	}
+	if(Graphics ){
+		var contenedora;
+		var areaMayor = 0;
+		var area = 0;
+		for (var i = 0; i <Graphics.length;i++) {
+			area = (Graphics[i].Width - Graphics[i].XPosition) *(Graphics[i].Height - Graphics[i].YPosition);
+			if(area > areaMayor){
+				areaMayor = area;
+				contenedora = Graphics[i].Name+"_"+canvas;
+			}
+		}
+		$("#"+contenedora).removeClass("bloque");
+		$("#"+contenedora).addClass("mayor");
+	}
+	
 }
 
 function pintarGraphics(graphics,canvas){
@@ -116,16 +137,16 @@ function pintarGraphics(graphics,canvas){
 		if(graphics.Width > 0){
 			
 			var grp = $( "<div/>",{
-				id:graphics.Name,
+				id:graphics.Name+"_"+canvas,
 				class:"graphics"
 			}).appendTo("#c" + canvas);
 
-			estilo += "#"+graphics.Name+"{"+
-				"width:" + zoom * graphics.Width + "px;" + 
-				"height:" + zoom * graphics.Height + "px;"+
+			estilo += "#"+graphics.Name+"_"+canvas+"{"+
+				"width:" + Math.round(zoom * graphics.Width) + "px;" + 
+				"height:" + Math.round(zoom * graphics.Height) + "px;"+
 				"position:absolute;"+
-				"Top:" + zoom * graphics.YPosition + "px;" + 
-				"Left:" + zoom * graphics.XPosition + "px;"+
+				"Top:" + Math.round(zoom * graphics.YPosition) + "px;" + 
+				"Left:" + Math.round(zoom * graphics.XPosition) + "px;"+
 				"color: " + graphics.GraphicsFontColor + ";"+
 				"}";
 
@@ -136,94 +157,129 @@ function pintarGraphics(graphics,canvas){
 			}
 
 			if(graphics.CornerRadiusY > 0){
-				grp.css('border-radius',graphics.CornerRadiusY + "px")	;
-				grp.css('background-color',"#A6F6F6");	
-				grp.css('border',"1px solid white");	
+				/*	grp.css('border-radius',graphics.CornerRadiusY + "px")	;
+				 *	grp.css('background-color',"#A6F6F6");	
+				 *	grp.css('border',"1px solid white");	*/
 				grp.addClass('bloque');
 			}
 		}
 	}catch(e){
-		console.log("Error en graphics canvas:"+canvas);
+		logger("Error en graphics canvas:"+canvas);
 	}
 }
 
 function pintarBloque(block){
 
-	if(!$.isArray(block.Item)){
-		pintarItems(block.Item,block.Name);
-	}else{
-		for (var i = 0; i < block.Item.length; i++) {
-			pintarItems(block.Item[i],block);
-
-		};
-	}
+	//if(block.RecordsDisplayCount !== "1"){
+	
+		crearSelect(block);
+	//}else{
+		if(!$.isArray(block.Item)){
+			pintarItems(block.Item,block.Name);
+		}else{
+			for (var i = 0; i < block.Item.length; i++) {
+				pintarItems(block.Item[i],block);
+			};
+		}
+	//}
 }
 
 function pintarItems(item,block){
 	try{
-		//item.Prompt = item.Prompt.replace("&#10;"," ");
-		/*
-		if(! $('#b'+block.Name).length ){ 
-			var blocke = $('<div/>',
-				{
-				id:"b"+block.Name
-			}).appendTo("#c"+item.CanvasName);
-		}else{
-			var blocke = $('#b'+block.Name);
-		}
-		*/
+
 		var divCont =$('<div/>',{
 			id:"d"+block.Name+"_"+item.Name
-		}).appendTo("#c"+item.CanvasName);
-		
-
-		var blocke = $("#c"+item.CanvasName);
+		});
 
 		try{
 			var label = $("<label/>",{
 				id:"l"+block.Name+"_"+item.Name,
 				'for':block.Name+"_"+item.Name,
-				text:item.Prompt
+				text:item.Prompt.replace('&#10;','\n')
 			}).appendTo(divCont);
 
-			var lTop,lLeft
-
-			if(item.PromptAttachmentEdge === "Arriba"){
-				lTop = (zoom * item.YPosition - 20) + "px;";
-				lLeft = zoom * item.XPosition + "px;";
-			}else{
-				lTop = (zoom * item.YPosition) + "px;";
-				lLeft = (zoom * item.XPosition - (item.Prompt.length) * 8) + "px;"; 
-			}
-			if(!isNaN(item.YPosition) && !isNaN(item.XPosition) && !isNaN(item.Prompt.length)){
-				estilo +="#l"+block.Name+"_"+item.Name+"{"+
-					"position:absolute;" +
-					"Top:" + lTop   + 
-					"Left:" + lLeft +
-					"}";
-			}
+			var lTop,lLeft;
 
 		}catch(e){
-			console.log(item.Name + " error en label")
+			logger(block.Name+"_"+item.Name + " error en label")
 			item.Prompt = "";
 		}
 
 		var input = $('<input/>',{
-			id:block.Name+"_"+item.Name,
-			placeholder:item.Prompt,
-			title:item.Prompt
+			id:block.Name+"__"+item.Name,
+			placeholder:item.Prompt.replace('&#10;',' '),
+			title:item.Prompt.replace('&#10;',' '),
+			required:item.Required?"True":"False"
 		}).appendTo(divCont);
 
+		if(item.UpdateAllowed === "false"){
+			$(input).attr("readonly","readonly")
+		}
+
 		if(!isNaN(item.Width) && !isNaN(item.Height) && !isNaN(item.YPosition) && !isNaN(item.XPosition)){
-				estilo +="#"+block.Name+"_"+item.Name+"{"+
-					"width:" + zoom * item.Width + "px;" + 
-					"height:" + zoom * item.Height + "px;" + 
-					"position:absolute;" + 
-					"Top:" + zoom * item.YPosition + "px;" + 
-					"Left:" + zoom * item.XPosition + "px;"+
-					"}";
+			var lTop = Math.round(zoom * item.YPosition);
+			var lLeft = Math.round(zoom * item.XPosition);
+			var contenedor, contName;
+			var divGraph = $("#c"+item.CanvasName);
+
+			try{
+				salida:
+				for(var i=0; i < jsonWork.Canvas.length;i++){
+					if(jsonWork.Canvas[i].Graphics && jsonWork.Canvas[i].Name === item.CanvasName){ 
+						if($.isArray(jsonWork.Canvas[i].Graphics)){
+							for (var j = 0; j < jsonWork.Canvas[i].Graphics.length; j++) {
+								contenedor = jsonWork.Canvas[i].Graphics[j];
+								contName = contenedor.Name + "_" + jsonWork.Canvas[i].Name;
+								if($('#'+contName).hasClass('bloque') ){
+									var pos = {"top": Math.round(zoom*contenedor.YPosition), "left": Math.round(zoom*contenedor.XPosition),
+										"width": Math.round(zoom*contenedor.Width), "height": Math.round(zoom*contenedor.Height)};
+									var it = {"top": Math.round(zoom * item.YPosition),"left": Math.round(zoom * item.XPosition)};
+
+									if((pos.left < it.left && it.left < pos.width + pos.left ) && (pos.top < it.top && it.top < pos.height + pos.top)){
+										var msj = block.Name+"_"+item.Name + " dentro " + contenedor.Name ;
+										lTop = it.top - pos.top;
+										lLeft = it.left - pos.left
+										divGraph = $('#'+contenedor.Name+"_"+item.CanvasName);
+										break salida;
+									}
+								}//Cierre validacion si es bloque
+							}//Cierre for interno
+						}else{//Cierre Graphics es array
+							divGraph = $('#'+jsonWork.Canvas[i].Graphics.Name+"_"+item.CanvasName);	
+						}//Cierre si Graphics es objeto
+					}//Cierre canvas.graphics esta definido y nombre canvas es el canvas del item
+				}//Cierre for Externo
+				divCont.appendTo(divGraph);
+			}catch(e){
+				logger("Error mirando contenedores" + JSON.stringify(contenedor)+e);
 			}
 
+			estilo +="#"+block.Name+"_"+item.Name+"{"+
+				"width:" + Math.round(zoom * item.Width) + "px;" + 
+				"height:" + Math.round(zoom * item.Height) + "px;" + 
+				"position:absolute;" + 
+				"Top:" + lTop + "px;" + 
+				"Left:" + lLeft + "px;"+
+				"}";
+
+			if(item.Prompt){
+				if(item.PromptAttachmentEdge === "Arriba"){
+					lTop = Math.round(lTop - 20) + "px;";
+					lLeft = lLeft + "px;";
+				}else{
+					lTop = lTop + "px;";
+					lLeft = Math.round(lLeft - (item.Prompt.length) * 8) + "px;"; 
+				}
+				if(!isNaN(item.YPosition) && !isNaN(item.XPosition) && !isNaN(item.Prompt.length)){
+					estilo +="#l"+block.Name+"_"+item.Name+"{"+
+						"position:absolute;" +
+						"Top:" + lTop   + 
+						"Left:" + lLeft +
+						"}";
+				}
+			}
+
+		}
 
 		if(item.ItemType === "Botón"){
 			input.attr('type','button');
@@ -234,29 +290,35 @@ function pintarItems(item,block){
 		}else{
 			input.attr('type','text');
 			input.attr('class','form-control');
+			input.attr('maxlength',item.MaximumLength?item.MaximumLength:100);
+			input.addClass(item.DataType);
 		}
 
 	}catch(e){
-		console.log("Error con el item " + item.Name)
+		logger("Error con el item " + item.Name)
 	}
 }
+
+
 //Agregado para descargar
 function downloadDiv() {
 
-	var contenido = '<!DOCTYPE html><html><head>'+
+	var contenido = '<%@page contentType="text/html" pageEncoding="UTF-8"%>' +
+		'<% '+
+		'	if (null == session.getAttribute("usuario")) {'+
+		'		response.sendRedirect("index.html"); session.invalidate(); '+
+		'    }'+
+		' %>'+
+	'<!DOCTYPE html><html><head>'+
 	'<meta charset="UTF-8"/> '+
-	'<script src="js/jquery.min.js"></script>' +
-	'<script src="js/bootstrap.min.js"></script>' +
-	'<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">' +
-	'<link rel="stylesheet" type="text/css" href="css/roboto.css">' +
-	'<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">' +
 	'<link rel="stylesheet" type="text/css" href="css/'+ $("#forma").val() +'.css"/>' +
 	'</head><body>' +
 	$("#divhtml").html() + '</body></html>';
 
+
 	$("#desHtml").attr({
-		download:$("#forma").val()+".html",
-		href:'data:text/html;charset=utf-8,' + encodeURIComponent(contenido)
+		download:$("#forma").val()+".jsp",
+		href:'data:text/jsp;charset=utf-8,' + encodeURIComponent(contenido)
 	});
 
 	$("#desCSS").attr({
@@ -302,7 +364,9 @@ function traducirProc(proc){
 	proc = proc.replace('BEGIN','*/){');
 	proc = proc.replace("null;","return 0;")
 	proc = proc.replace("END;","};")
-	proc = reemplazarGoItem(proc);
+	proc = proc.replace('.','_','ig');
+	proc = proc.replace("--","//",'ig')
+	//proc = reemplazarGoItem(proc);
 	traducido = proc;
 
 	return traducido;
@@ -317,7 +381,6 @@ function buscarLinea(proce,inicio,finalL){
 
 	linea = proce.substr(posI, posF);
 	return linea;
-
 }
 
 function reemplazarGoItem(proce){
@@ -331,4 +394,51 @@ function reemplazarGoItem(proce){
 	proce = proce.replace(linea,lAux);
 
 	return proce;
+}
+
+function encriptar(mCadena,mEncripta){
+	mCadena = mCadena.toUpperCase();
+	var mCad1 = " !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_{|}~ÀÈIÒÙÑ¿";
+	var mCad2 = '¿ÑÚÓÍÉÁ~}|{_^]\\[ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)(&%$#! ';
+	var mResultado = "";
+	var mLong = mCadena.length, mPos;
+	for (var i = 0; i < mLong; i++) {
+		if(mEncripta){
+			mPos = mCad1.indexOf(mCadena[i]);
+			mResultado +=  mCad2[mPos];
+		}else{
+			mPos = mCad2.indexOf(mCadena.charAt(i));
+			mResultado +=  mCad1[mPos];
+		}
+	}
+	return mResultado;
+
+}
+
+function crearSelect(block){
+	var selectBloque = "";
+
+	var columns = block.DataSourceColumn;
+	if(columns){
+		/* Se cargan los campos a consultar del bloque*/
+		var cabecera ="";
+		for (var i = 0; i < columns.length; i++) {
+			if(i){
+				cabecera +=',';
+			}
+			cabecera += columns[i].DSCName;
+		};
+		/**/
+
+		/*Se encripta el select*/
+		selectBloque =[ encriptar('select '),
+			encriptar(cabecera),
+			encriptar(' from '),
+			encriptar(block.Name),
+			encriptar(' where '),
+			encriptar(block.WhereClause)
+			].join('');
+	}
+	console.info(selectBloque);
+	return selectBloque;
 }

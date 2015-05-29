@@ -7,10 +7,12 @@
 	<script src="js/xml2json.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/migracion.js"></script>
+	<script src="js/sio_lov.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<style type="text/css">
-		div{
+		div, textarea{
 			box-sizing: border-box;
+			resize: none;
 		}
 		#divhtml input{
 			/*font-size: 0.57em;*/
@@ -44,7 +46,7 @@
 	<div id="container">
 		<div id="divControles">
 			<label for="forma">Forma</label>
-			<input id="forma" placeholder="Digita el nombre de la forma" value="ACT2004"/>
+			<input id="forma" placeholder="Digita el nombre de la forma" value="CONTR067"/>
 			<input id="zoom" type="slider"/>
 			<button onclick="$('#forma').val('');$('#respjson').val('');">Limpiar</button>
 			<a id="desHtml">HTML</a>
@@ -53,6 +55,7 @@
 			<button id="ghtml">Generar HTML</button>
 			<button id="gjs">Generar JS</button>
 			<button id="gpkg">Generar Procedimientos</button>
+			<button id="genc">Encriptar</button>
 		</div>
 		<div>
 			<textarea id="respjson" rows="10"></textarea>
