@@ -1,0 +1,33 @@
+div, textarea{
+	box-sizing: border-box;
+	resize: none;
+}
+textarea{
+	width: 50%;
+}
+hr {
+	margin: 0 0 10px 0;
+}
+#container, #divhtml{
+	width: 100%;
+	text-align: center;
+}
+#divControles{
+	text-align: center;
+	display: inline-block;
+	margin: 0 auto;
+}
+#respjson{
+	width: 500px;
+	display: none;
+}
+.window{
+	margin: 0 auto;
+	background-color:Gray;
+}
+.canvas{
+	background-color:Gray;
+}
+.graphics {
+	font-weight: bold;
+}

@@ -6,52 +6,22 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/xml2json.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/migracion.js"></script>
-	<script src="js/sio_lov.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<style type="text/css">
-		div, textarea{
-			box-sizing: border-box;
-			resize: none;
-		}
-		#divhtml input{
-			/*font-size: 0.57em;*/
-		}
-		#container, #divhtml{
-			text-align: center;
-		}
-		#divControles{
-			text-align: center;
-			display: inline-block;
-			margin: 0 auto;
-		}
-		#respjson{
-			width: 500px;
-			display: none;
-		}
-		.window{
-			margin: 0 auto;
-			background-color:Gray;
-		}
-		.canvas{
-			background-color:Gray;
-		}
-		.graphics {
-			font-weight: bold;
-		}
-
-	</style>
+	<script src="js/bootstrap-table.min.js"></script>
+	<script src="js/migra2.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css"> 
+	<link rel="stylesheet" href="css/bootstrap-table.min.css"> 
+	<link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 	<div id="container">
-		<div id="divControles">
-			<label for="forma">Forma</label>
-			<input id="forma" placeholder="Digita el nombre de la forma" value="CONTR067"/>
-			<input id="zoom" type="slider"/>
-			<button onclick="$('#forma').val('');$('#respjson').val('');">Limpiar</button>
+		<div id="divControles" class="page-header">
+		<div class="page-header" style="margin-top: 10px;">
+			<label for="forma">Forma
+				<input id="forma" placeholder="Digita el nombre de la forma" value="CONTR"/>
+			</label>
 			<a id="desHtml">HTML</a>
 			<a id="desCSS">CSS</a>
-			<hr/>
+			</div>
 			<button id="ghtml">Generar HTML</button>
 			<button id="gjs">Generar JS</button>
 			<button id="gpkg">Generar Procedimientos</button>
