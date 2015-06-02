@@ -1,17 +1,17 @@
-var nombre, modulo, divhtml;
+var nombre, modulo, divhtml, estilo;
 var listaGraficos = {};
 $(document).ready(function() {
 	divhtml = $('#divhtml');
-
 	$('#forma').on('change', extraerXML);
 	$('#ghtml').on('click', extraerXML);
 
 });
 function extraerXML(){
 
-	var nombre = $('#forma').val();
+	nombre = $('#forma').val();
 	divhtml.empty();
 	listaGraficos = {};
+	estilo = "";
 
 	$.get("xml/" + nombre +"_fmb.xml",function(xml){
 		modulo = $.xml2json(xml).FormModule;
@@ -30,8 +30,12 @@ function migracion(forma){
 	extraerCanvas(forma.Canvas);
 
 	extraerBloques(forma.Block);
+	if(forma.LOV && forma.RecordGroup){
+		extraerLOVs(forma.LOV,forma.RecordGroup);
+	}
 
-	extraerLOVs(forma.LOV,forma.RecordGroup);
+	downloadDiv();
+
 }
 
 function extraerWindows(ventanas){
@@ -110,6 +114,7 @@ function pintarGrafico(grafico,lienzo){
 		text:grafico.GraphicsText,
 		data:grafico
 	}).appendTo(lienzo);
+	
 }
 
 
@@ -189,10 +194,6 @@ function pintarItem(item,bloque,nomBloque){
 
 	if(tipo === 'radio'){
 		$.each(item.RadioButton,function(i, radio){
-			var label = $('<label/>',{
-				id:'l'+nomBloque + "__" + item.Name,
-				text:radio.Label?radio.Label:radio.Name
-			}).appendTo(divContenedor);
 			var checked;
 			if(item.hasOwnProperty('InitializeValue') && radio.hasOwnProperty('RadioButtonValue')){
 				if(radio.RadioButtonValue === item.InitializeValue){
@@ -208,7 +209,12 @@ function pintarItem(item,bloque,nomBloque){
 				checked: checked,
 				data: radio,
 				'data-block':nomBloque
-			}).appendTo(label);
+			}).appendTo(divContenedor);
+
+			var label = $('<label/>',{
+				id:'l'+nomBloque + "__" + item.Name,
+				text:radio.Label?radio.Label:radio.Name
+			}).appendTo(divContenedor);
 		})
 	}else if(tipo === 'button'){
 		var boton = $('<button/>',{
@@ -221,6 +227,7 @@ function pintarItem(item,bloque,nomBloque){
 	}else{
 		var label = $('<label/>',{
 			id:'l'+ nomBloque + "__" + item.Name,
+			'for':nomBloque + "__" + item.Name,
 			text:item.hasOwnProperty('Prompt')?fixChain(item.Prompt):item.Name
 		}).appendTo(divContenedor);
 
@@ -228,15 +235,31 @@ function pintarItem(item,bloque,nomBloque){
 			id: nomBloque + "__" + item.Name,
 			name: nomBloque + "__" + item.Name,
 			type: tipo,
-			class: ['form-control ' , item.DataType?item.DataType:' '].join(' '),
+			class: ['form-control' , item.DataType?item.DataType:''].join(' '),
 			'data-mask':item.hasOwnProperty('FormatMask')?item.FormatMask:undefined,
 			maxlength:item.hasOwnProperty('MaximumLength')?item.MaximumLength:undefined,
 			placeholder:item.hasOwnProperty('Prompt')?fixChain(item.Prompt):undefined,
 			readonly:item.UpdateAllowed === "false",
 			'data-block':nomBloque,
 			'data-lov':item.hasOwnProperty('LovName')?item.LovName:undefined
-		}).appendTo(label);
+		}).appendTo(divContenedor);
+
+		estilo += "#" + nomBloque + "__" + item.Name + "{" +
+			"width:" + item.Width + "px;" +
+		"}";
 	}
+	/*
+	if(item.hasOwnProperty('YPosition') && item.hasOwnProperty('XPosition') ){
+		estilo += "#d" + nomBloque + "__" + item.Name + "{" +
+		"top:"+ item.YPosition + "px;" +
+		"left:"+ item.XPosition + "px;" +
+		"position:absolute" +
+		"}";
+	}
+	*/
+	
+
+
 
 	return item.CanvasName;
 }
@@ -261,6 +284,13 @@ function definirContenedor(item,canvasName){
 		if(pItem.x > pGrafico.x && pItem.x < pGrafico.w + pGrafico.x){
 			if(pItem.y > pGrafico.y && pItem.y < pGrafico.h + pGrafico.y){
 				container = "g"+grafico.Name;
+				item.YPosition = pItem.y - pGrafico.y;
+				$('#'+container).addClass('bloque');
+				/*
+				estilo += "#g" + grafico.Name + "{" +
+					"height:" + (parseInt(grafico.Height)+ 100) + "px;" +
+				"}";
+				*/
 			}
 		}
 	});
@@ -279,12 +309,22 @@ function fixQuery(whereClause){
 function cambiarParametros(query){
 	if(query.indexOf(':') > 0){
 		var posI = query.indexOf(':');
-		var posF = query.substring(posI).indexOf(' ') + posI
+		var posF;
+		var posFEsp = query.substring(posI).indexOf(' ') + posI
+		var posFComa = query.substring(posI).indexOf(',') + posI
+		var posFPare = query.substring(posI).indexOf(')') + posI
+		if(posFComa > posI && posFComa < posFEsp){
+			posF = posFComa
+		}else if(posFPare > posI && posFPare < posF ){
+			posF = posFPare;
+		}else{
+			posF = posFEsp;
+		}
 		if(posF < posI){
 			posF = query.length;
 		}
 		var remp = query.substring(posI,posF);
-		query = query.replace(remp,'?');
+		query = query.replace(remp,'?','ig');
 		return cambiarParametros(query);
 	}else{
 		return query;
@@ -330,12 +370,46 @@ function pintarLOV(lov,recordGroups){
 			}).appendTo(body);
 			var th = $('<thead/>').appendTo(tab);
 			var tr = $('<tr/>').appendTo(th);
-			$.each(lov.LOVColumnMapping,function(i, column){
+			if($.isArray(lov.LOVColumnMapping)){
+				$.each(lov.LOVColumnMapping,function(i, column){
+					$('<th/>',{
+						'data-field':column.Name,
+						text:column.Title
+					}).appendTo(tr);
+				});
+			}else{
 				$('<th/>',{
-					'data-field':column.Name,
-					text:column.Title
+					'data-field':lov.LOVColumnMapping.Name,
+					text:lov.LOVColumnMapping.Title
 				}).appendTo(tr);
-			});
+			}
 		}
 	});
+}
+
+function downloadDiv() {
+
+	var contenido = '<%@page contentType="text/html" pageEncoding="UTF-8"%>' +
+	'<% '+
+	'	if (null == session.getAttribute("usuario")) {'+
+	'		response.sendRedirect("index.html"); session.invalidate(); '+
+	'    }'+
+	' %>'+
+	'<!DOCTYPE html><html><head>'+
+	'<meta charset="UTF-8"/> '+
+	'<link rel="stylesheet" type="text/css" href="css/'+ nombre.toUpperCase() +'.css"/>' +
+	'</head><body>' +
+	$("#divhtml").html() + '</body></html>';
+
+
+	$("#desHtml").attr({
+		download:nombre.toUpperCase()+".jsp",
+		href:'data:text/jsp;charset=utf-8,' + encodeURIComponent(contenido)
+	});
+	
+	$("#desCSS").attr({
+		download:nombre.toUpperCase()+".css",
+		href:'data:text/css;charset=utf-8,' + encodeURIComponent(estilo)
+	});
+
 }
