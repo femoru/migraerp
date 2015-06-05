@@ -1,11 +1,70 @@
-var nombre, modulo, divhtml, estilo;
+var nombre, modulo, divhtml, estilo, proced = {}, contenido;
 var listaGraficos = {};
 $(document).ready(function() {
 	divhtml = $('#divhtml');
 	$('#forma').on('change', extraerXML);
+	
 	$('#ghtml').on('click', extraerXML);
+	$("#gpkg").on('click', generarPaquetes);
+	$("#ggjs").on('click',generarTriggers);
+	$("#genc").on('click',function(){
+		$("#divhtml").empty();
+		encriptarSelect();
+	});
 
 });
+function encriptarSelect(){
+	var entrada = $('<textarea/>',{
+		cols:100,
+		rows:20
+	}).appendTo("#divhtml")
+
+	var salida = $('<textarea/>',{
+		cols:100,
+		rows:20
+	}).appendTo("#divhtml");
+
+	$(entrada).on('keyup',function(){
+		var texto = $(entrada).val();
+		$(salida).val(encriptar(texto));
+	});
+}
+function encriptar(mCadena,mEncripta){
+	mCadena = mCadena.toUpperCase();
+	var mCad1 = " !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_{|}~ÀÈIÒÙÑ¿";
+	var mCad2 = "¿ÑÚÓÍÉÁ~}|{_^]\\[ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)(&%$#! ";
+	var mResultado = "";
+	var mLong = mCadena.length, mPos;
+	for (var i = 0; i < mLong; i++) {
+		if(mEncripta){
+			mPos = mCad1.indexOf(mCadena[i]);
+			mResultado +=  mCad2[mPos];
+		}else{
+			mPos = mCad2.indexOf(mCadena.charAt(i));
+			mResultado +=  mCad1[mPos];
+		}
+	}
+	return mResultado;
+
+}
+
+function generarTriggers(){
+	if(modulo){
+		divhtml.empty();
+		extraerTriggers(modulo);
+	}else{
+		alert('No se ha cargado ninguna forma');
+	}
+}
+
+function generarPaquetes(){
+	if(modulo){
+		divhtml.empty();
+		extraerUnidades(modulo);
+	}else{
+		alert('No se ha cargado ninguna forma');
+	}
+}
 function extraerXML(){
 
 	nombre = $('#forma').val();
@@ -77,7 +136,7 @@ function pintarLienzo(lienzo){
 		return;
 	}
 	var vent = $("#w"+lienzo.WindowName);
-	var dLienzo = $( "<form/>",{
+	var dLienzo = $( "<div/>",{
 		id:"c"+lienzo.Name,
 		class:"lienzo form-inline",
 		data:lienzo
@@ -231,12 +290,19 @@ function pintarItem(item,bloque,nomBloque){
 			text:item.hasOwnProperty('Prompt')?fixChain(item.Prompt):item.Name
 		}).appendTo(divContenedor);
 
+		var mask = undefined;
+		if(item.hasOwnProperty('FormatMask')){
+			mask = item.FormatMask;
+			mask = mask.replace('G','.','ig');
+			mask = mask.replace('D',',','ig');
+		}
+
 		var input = $('<input/>',{
 			id: nomBloque + "__" + item.Name,
 			name: nomBloque + "__" + item.Name,
 			type: tipo,
 			class: ['form-control' , item.DataType?item.DataType:''].join(' '),
-			'data-mask':item.hasOwnProperty('FormatMask')?item.FormatMask:undefined,
+			'data-mask':mask,
 			maxlength:item.hasOwnProperty('MaximumLength')?item.MaximumLength:undefined,
 			placeholder:item.hasOwnProperty('Prompt')?fixChain(item.Prompt):undefined,
 			readonly:item.UpdateAllowed === "false",
@@ -257,10 +323,6 @@ function pintarItem(item,bloque,nomBloque){
 		"}";
 	}
 	*/
-	
-
-
-
 	return item.CanvasName;
 }
 
@@ -298,8 +360,11 @@ function definirContenedor(item,canvasName){
 	return "#" + container;
 }
 
-function fixChain(cadena){
-	cadena = cadena.replace('&#10;',' ','ig')
+function fixChain(cadena,rplc){
+	if(!rplc){
+		rplc = ' ';
+	}
+	cadena = cadena.replace('&#10;',rplc,'ig')
 	return cadena;
 }
 function fixQuery(whereClause){
@@ -363,8 +428,6 @@ function pintarLOV(lov,recordGroups){
 		if(group.Name === lov.RecordGroupName){
 			var tab = $('<table/>',{
 				id:'tl'+lov.Name,
-				'data-url':'getSelect',
-				//'data-query-params':JSON.stringify({params:'01'}),
 				'data-toggle':'table',
 				'data-query':fixQuery(group.RecordGroupQuery)
 			}).appendTo(body);
@@ -389,7 +452,7 @@ function pintarLOV(lov,recordGroups){
 
 function downloadDiv() {
 
-	var contenido = '<%@page contentType="text/html" pageEncoding="UTF-8"%>' +
+	contenido = '<%@page contentType="text/html" pageEncoding="UTF-8"%>' +
 	'<% '+
 	'	if (null == session.getAttribute("usuario")) {'+
 	'		response.sendRedirect("index.html"); session.invalidate(); '+
@@ -401,15 +464,129 @@ function downloadDiv() {
 	'</head><body>' +
 	$("#divhtml").html() + '</body></html>';
 
+	contenido = contenido.replace('><','>\n<','ig');
+
+	var jsp = new Blob([contenido],{type:'txt/jsp;charset=UTF-8'});
 
 	$("#desHtml").attr({
 		download:nombre.toUpperCase()+".jsp",
-		href:'data:text/jsp;charset=utf-8,' + encodeURIComponent(contenido)
+		//href:'data:text/jsp;charset=utf-8,' + encodeURIComponent(contenido) //encodeURIComponent
+		href: window.URL.createObjectURL(jsp)
 	});
 	
+	estilo = estilo.replace('}#','}\n#','ig');
+	estilo = estilo.replace('{w','{\n\tw','ig');
+	estilo = estilo.replace(';}',';\n}','ig');
+	
+	var css = new Blob([estilo],{type:'txt/css;charset=UTF-8'});	
+
 	$("#desCSS").attr({
 		download:nombre.toUpperCase()+".css",
-		href:'data:text/css;charset=utf-8,' + encodeURIComponent(estilo)
+		href:window.URL.createObjectURL(css)
 	});
 
+}
+
+/**---------------------------------------------------------------
+ * Arranque con la logica XD
+ *---------------------------------------------------------------
+**/
+function extraerUnidades(json){
+	var texto = "";
+	var jst = "";
+	$.each(json.ProgramUnit,function(i, unidad){
+		if(unidad){
+			var nombre = unidad.Name;
+			var procedimiento = fixChain(unidad.ProgramUnitText,'\n');
+
+			proced[nombre] = procedimiento;
+
+			texto += "----------------------------\n" + procedimiento + "\n\n";
+			jst += "----------------------------\n" + traducirProc(procedimiento) + "\n\n";
+
+		}
+	});
+
+	var txt1 = $('<textarea/>',{
+		text:texto,
+		cols:100,
+		rows:20
+	}).appendTo("#divhtml");
+	
+	var txt2 = $('<textarea/>',{
+		text:jst,
+		cols:100,
+		rows:20
+	}).appendTo("#divhtml");
+
+	txt1.on('scroll',function(){
+		txt2.scrollTop(txt1.scrollTop());
+	});
+
+	txt2.on('scroll',function(){
+		txt1.scrollTop(txt2.scrollTop());
+	});
+}
+
+function traducirProc(proc){
+	var traducido =""; 
+	proc = proc.replace('PROCEDURE','function');
+	proc = proc.replace('IS','(/*');
+		proc = proc.replace('BEGIN','*/){');
+		proc = proc.replace("null;","return 0;")
+		proc = proc.replace("END;","};")
+		proc = proc.replace('.','__','ig');
+		proc = proc.replace("--","//",'ig')
+	//proc = reemplazarGoItem(proc);
+	traducido = proc;
+
+	return traducido;
+}
+
+function extraerTriggers(forma){
+	var triggers = [], texto = "";
+	
+	var txt1 = $('<textarea/>',{
+		width:'94%',
+		cols: 100,
+		rows: 20
+	});
+
+	var btn1 = $('<button/>',{
+		text:'Bloques'
+	}).appendTo(divhtml).on('click',function(){
+		texto = "";
+		triggers = [];
+		$.each(forma.Block,function(i,bloque){
+			if(bloque.hasOwnProperty('Trigger') && !bloque.Name.startsWith('TOOLBAR')){
+				texto += bloque.Name;
+				texto += leerTrigger(bloque.Trigger);
+				//texto += leerTrigger(bloque.Trigger,texto);
+			}
+		});
+		txt1.val(texto);
+	});
+
+	$('<button/>',{
+		text:'Items'
+	}).appendTo(divhtml).on('click',function(){
+		alert('XD aun no lo implemento!!!')
+	});
+	txt1.appendTo(divhtml)
+	btn1.click();
+
+}
+
+function leerTrigger(trigger){
+	var tx = "";
+	if(!$.isArray(trigger)){
+		tx += "\n-- " + trigger.Name; 
+		tx += "\n\t" + fixChain(trigger.TriggerText,'\n\t');
+	}else{
+		$.each(trigger,function(i, trig){
+			tx += "\n-- " + trig.Name;
+			tx += "\n\t" + fixChain(trig.TriggerText,'\n\t');
+		});
+	}
+	return tx;
 }
